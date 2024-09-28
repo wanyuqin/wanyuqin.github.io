@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>设计模式之建造者模式 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="设计模式之建造者模式
+建造者模式又称为生成器模式，建造者模式为客户端返回的不是一个简单的产品，而是一个由多个部件组成的复杂产品
+概述
+建造者模式是较为复杂的创建型模式，它将客户端与包含多个组成部分的复杂对象的创建过程分离，客户端无须知道复杂对象的内部组成部分与装配方式，只需要知道所创建的建造者类型即可。建造者关注如何一步步创建一个复杂对象，不同的建造者定义了不同的创建过程，而且具体的建造者相互独立，增加新的建造者也无须修改已有的代码，具有比较好的拓展性，建造者允许用户只通过制定复杂对象的类型和内容就可以构建他们，用户不需要知道内部的具体细节
+定义
+建造者模式：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。建造者模式是一种对象创建型模式
+建造者模式包含4个角色
+
+Builder(抽象建造者)：它为创建一个产品Product对象的各个部件指定抽象接口，在该接口中一般声明两类方法：一类是builderPartX()，用于创建复杂对象的各个部件，另一类方法是getResult()，用于返回复杂对象。
+ConcreteBuilder(具体建造者)：他实现了Builder接口，实现了各个部件的具体构造和装配方法，定义并明确了其所创建的复杂对象，也提供一个方法返回创建好的复杂产品对象
+Product(产品角色)：它是被构建的复杂对象，包含多个组成部件，具体建造者创建该产品的内部表示并定义其装配过程
+Director(指挥者): 它负责安排复杂对象的建造次序，指挥者与抽象建造者之间存在关联关系，可以在其construct()建造方法中调用建造者对象的部件构造与装配方法，完成复杂对象的建造，客户端一般只需要和指挥者交互
+
+什么是复杂对象？复杂对象就是包含多个成员变量的对象
+组装电脑
+我们以组装电脑为例子，假设我们需要组装不同CPU，内存，硬盘，以及显卡的电脑，我们可以把这个过程模拟成建造者模式，以下是代码实现
+package builder
+
+type Builder interface {
+   InstallCpu()
+   InstallMemory()
+   InstallHardDisk()
+   InstallMobo()
+   InstallGpu()
+
+   GetComputer() Computer
+}
+
+type Computer struct {
+   Cpu      string // cpu
+   Memory   string // 内存
+   HardDisk string // 硬盘
+   Mobo     string // 主板
+   Gpu      string // 显卡
+
+}
+
+type Director struct {
+   ComputerBuilder Builder
+}
+
+func NewDirector(computerBuilder Builder) *Director {
+   return &amp;Director{
+      ComputerBuilder: computerBuilder,
+   }
+}
+
+func (d *Director) Construct() Computer {
+   d.ComputerBuilder.InstallCpu()
+   d.ComputerBuilder.InstallMobo()
+   d.ComputerBuilder.InstallHardDisk()
+   d.ComputerBuilder.InstallMemory()
+   d.ComputerBuilder.InstallGpu()
+   return d.ComputerBuilder.GetComputer()
+
+}
+
+// OfficeComputer 办公电脑
+type OfficeComputer struct {
+   Computer Computer
+}
+
+// GameComputer 游戏电脑
+type GameComputer struct {
+   Computer Computer
+}
+
+func NewOfficeComputer() *OfficeComputer {
+   return &amp;OfficeComputer{
+      Computer: Computer{},
+   }
+}
+
+func NewGameComputer() *GameComputer {
+   return &amp;GameComputer{
+      Computer: Computer{},
+   }
+}
+
+func (o *OfficeComputer) InstallCpu() {
+   o.Computer.Cpu = &#34;Intel H610&#34;
+}
+
+func (o *OfficeComputer) InstallMemory() {
+   o.Computer.Memory = &#34;8G&#34;
+}
+
+func (o *OfficeComputer) InstallHardDisk() {
+   o.Computer.HardDisk = &#34;256G&#34;
+}
+
+func (o *OfficeComputer) InstallMobo() {
+   o.Computer.Mobo = &#34;华硕（ASUS）PRIME H610M-A D4主板&#34;
+}
+func (o *OfficeComputer) InstallGpu() {
+   o.Computer.Gpu = &#34;核显&#34;
+}
+func (o *OfficeComputer) GetComputer() Computer {
+   return o.Computer
+}
+
+func (g *GameComputer) InstallCpu() {
+   g.Computer.Cpu = &#34;i5-12400&#34;
+}
+
+func (g *GameComputer) InstallMemory() {
+   g.Computer.Memory = &#34;16G&#34;
+}
+
+func (g *GameComputer) InstallHardDisk() {
+   g.Computer.HardDisk = &#34;500G&#34;
+}
+func (g *GameComputer) InstallMobo() {
+   g.Computer.Mobo = &#34;华硕B660M电竞主板&#34;
+}
+func (g *GameComputer) InstallGpu() {
+   g.Computer.Gpu = &#34;RTX3050&#34;
+}
+func (g *GameComputer) GetComputer() Computer {
+   return g.Computer
+}
+这里的Builder，就是一个接口，定义了一些组装的方法，同时也定义了一个GetComputer来获取最终得到的电脑">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      设计模式之建造者模式
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="设计模式之建造者模式">设计模式之建造者模式<a hidden class="anchor" aria-hidden="true" href="#设计模式之建造者模式">#</a></h1>
+<p>建造者模式又称为生成器模式，建造者模式为客户端返回的不是一个简单的产品，而是一个由多个部件组成的复杂产品</p>
+<h2 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h2>
+<p>建造者模式是较为复杂的创建型模式，它将客户端与包含多个组成部分的复杂对象的创建过程分离，客户端无须知道复杂对象的内部组成部分与装配方式，只需要知道所创建的建造者类型即可。建造者关注如何一步步创建一个复杂对象，不同的建造者定义了不同的创建过程，而且具体的建造者相互独立，增加新的建造者也无须修改已有的代码，具有比较好的拓展性，建造者允许用户只通过制定复杂对象的类型和内容就可以构建他们，用户不需要知道内部的具体细节</p>
+<h2 id="定义">定义<a hidden class="anchor" aria-hidden="true" href="#定义">#</a></h2>
+<p>建造者模式：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。建造者模式是一种对象创建型模式</p>
+<p>建造者模式包含4个角色</p>
+<ul>
+<li>Builder(抽象建造者)：它为创建一个产品Product对象的各个部件指定抽象接口，在该接口中一般声明两类方法：一类是builderPartX()，用于创建复杂对象的各个部件，另一类方法是getResult()，用于返回复杂对象。</li>
+<li>ConcreteBuilder(具体建造者)：他实现了Builder接口，实现了各个部件的具体构造和装配方法，定义并明确了其所创建的复杂对象，也提供一个方法返回创建好的复杂产品对象</li>
+<li>Product(产品角色)：它是被构建的复杂对象，包含多个组成部件，具体建造者创建该产品的内部表示并定义其装配过程</li>
+<li>Director(指挥者): 它负责安排复杂对象的建造次序，指挥者与抽象建造者之间存在关联关系，可以在其construct()建造方法中调用建造者对象的部件构造与装配方法，完成复杂对象的建造，<strong>客户端一般只需要和指挥者交互</strong></li>
+</ul>
+<p>什么是复杂对象？复杂对象就是包含多个成员变量的对象</p>
+<h2 id="组装电脑">组装电脑<a hidden class="anchor" aria-hidden="true" href="#组装电脑">#</a></h2>
+<p>我们以组装电脑为例子，假设我们需要组装不同CPU，内存，硬盘，以及显卡的电脑，我们可以把这个过程模拟成建造者模式，以下是代码实现</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">builder</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Builder</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallCpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallMemory</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallHardDisk</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallMobo</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallGpu</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Computer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Cpu</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// cpu
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Memory</span>   <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 内存
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">HardDisk</span> <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 硬盘
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Mobo</span>     <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 主板
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Gpu</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 显卡
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Director</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ComputerBuilder</span> <span style="color:#a6e22e">Builder</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewDirector</span>(<span style="color:#a6e22e">computerBuilder</span> <span style="color:#a6e22e">Builder</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Director</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Director</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">ComputerBuilder</span>: <span style="color:#a6e22e">computerBuilder</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Director</span>) <span style="color:#a6e22e">Construct</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallCpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallMobo</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallHardDisk</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallMemory</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallGpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">GetComputer</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// OfficeComputer 办公电脑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">OfficeComputer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Computer</span> <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// GameComputer 游戏电脑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GameComputer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Computer</span> <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewOfficeComputer</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">OfficeComputer</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Computer</span>: <span style="color:#a6e22e">Computer</span>{},
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewGameComputer</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">GameComputer</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Computer</span>: <span style="color:#a6e22e">Computer</span>{},
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallCpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Cpu</span> = <span style="color:#e6db74">&#34;Intel H610&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallMemory</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Memory</span> = <span style="color:#e6db74">&#34;8G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallHardDisk</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">HardDisk</span> = <span style="color:#e6db74">&#34;256G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallMobo</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Mobo</span> = <span style="color:#e6db74">&#34;华硕（ASUS）PRIME H610M-A D4主板&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallGpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Gpu</span> = <span style="color:#e6db74">&#34;核显&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallCpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Cpu</span> = <span style="color:#e6db74">&#34;i5-12400&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallMemory</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Memory</span> = <span style="color:#e6db74">&#34;16G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallHardDisk</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">HardDisk</span> = <span style="color:#e6db74">&#34;500G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallMobo</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Mobo</span> = <span style="color:#e6db74">&#34;华硕B660M电竞主板&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallGpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Gpu</span> = <span style="color:#e6db74">&#34;RTX3050&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里的Builder，就是一个接口，定义了一些组装的方法，同时也定义了一个GetComputer来获取最终得到的电脑</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Builder</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallCpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallMemory</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallHardDisk</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallMobo</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">InstallGpu</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>同时定一个结构体Computer，里面包含了许多的属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Computer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Cpu</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// cpu
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Memory</span>   <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 内存
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">HardDisk</span> <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 硬盘
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Mobo</span>     <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 主板
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">Gpu</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// 显卡
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>还定义了OfficeComputer以及GameComputer来作为建造者，实现Builder的方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// OfficeComputer 办公电脑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">OfficeComputer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Computer</span> <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// GameComputer 游戏电脑
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">GameComputer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Computer</span> <span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewOfficeComputer</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">OfficeComputer</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Computer</span>: <span style="color:#a6e22e">Computer</span>{},
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewGameComputer</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">GameComputer</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Computer</span>: <span style="color:#a6e22e">Computer</span>{},
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallCpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Cpu</span> = <span style="color:#e6db74">&#34;Intel H610&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallMemory</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Memory</span> = <span style="color:#e6db74">&#34;8G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallHardDisk</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">HardDisk</span> = <span style="color:#e6db74">&#34;256G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallMobo</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Mobo</span> = <span style="color:#e6db74">&#34;华硕（ASUS）PRIME H610M-A D4主板&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">InstallGpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Gpu</span> = <span style="color:#e6db74">&#34;核显&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">o</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">OfficeComputer</span>) <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">o</span>.<span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallCpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Cpu</span> = <span style="color:#e6db74">&#34;i5-12400&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallMemory</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Memory</span> = <span style="color:#e6db74">&#34;16G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallHardDisk</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">HardDisk</span> = <span style="color:#e6db74">&#34;500G&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallMobo</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Mobo</span> = <span style="color:#e6db74">&#34;华硕B660M电竞主板&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">InstallGpu</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>.<span style="color:#a6e22e">Gpu</span> = <span style="color:#e6db74">&#34;RTX3050&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">g</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">GameComputer</span>) <span style="color:#a6e22e">GetComputer</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g</span>.<span style="color:#a6e22e">Computer</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>最后，我们定义了一个指挥者，用来做最后的对象创建</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Director</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ComputerBuilder</span> <span style="color:#a6e22e">Builder</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewDirector</span>(<span style="color:#a6e22e">computerBuilder</span> <span style="color:#a6e22e">Builder</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Director</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Director</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">ComputerBuilder</span>: <span style="color:#a6e22e">computerBuilder</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Director</span>) <span style="color:#a6e22e">Construct</span>() <span style="color:#a6e22e">Computer</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallCpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallMobo</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallHardDisk</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallMemory</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">InstallGpu</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ComputerBuilder</span>.<span style="color:#a6e22e">GetComputer</span>()
+</span></span></code></pre></div><h3 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">builder</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#e6db74">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestDirector_Construct</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">officeComputerBuilder</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewOfficeComputer</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">officeDirector</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewDirector</span>(<span style="color:#a6e22e">officeComputerBuilder</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">computer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">officeDirector</span>.<span style="color:#a6e22e">Construct</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">computer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">gameComputerBuilder</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewGameComputer</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">gameDirector</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewDirector</span>(<span style="color:#a6e22e">gameComputerBuilder</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">gameComputer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gameDirector</span>.<span style="color:#a6e22e">Construct</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">gameComputer</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// === RUN   TestDirector_Construct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// {Intel H610 8G 256G 华硕（ASUS）PRIME H610M-A D4主板 核显}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// {i5-12400 16G 500G 华硕B660M电竞主板 RTX3050}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// --- PASS: TestDirector_Construct (0.00s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// PASS
+</span></span></span></code></pre></div><h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<h3 id="优点">优点<a hidden class="anchor" aria-hidden="true" href="#优点">#</a></h3>
+<ol>
+<li>在建造者模式中，客户端不必知道产品内部的创建细节，将产品本身和产品的创建过程解耦，使得创建过程相同可以创建不同的产品对象</li>
+<li>每一个具体的建造者都相对独立，而与其他的具体建造者无关，增加新的建造者无需修改原有的建造者的代码</li>
+<li>可以更加精细的控制产品的创建过程，将复杂的产品的创建步骤分解在不同的方法中，是的创建过程更加清晰</li>
+</ol>
+<h3 id="缺点">缺点<a hidden class="anchor" aria-hidden="true" href="#缺点">#</a></h3>
+<ol>
+<li>建造者创建的产品一般具有较多的共同电，如果产品之间的差异性很大，则不适合</li>
+<li>如果产品内部结构复杂且多变，可能需要定义很多的建造者，会使得系统变得庞大</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Protobuffer on My New Hugo Site</title>
+    <link>http://localhost:1313/categories/protobuffer/</link>
+    <description>Recent content in Protobuffer on My New Hugo Site</description>
+    <generator>Hugo -- 0.134.3</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/categories/protobuffer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Protocol Buffer基本使用</title>
+      <link>http://localhost:1313/protocol-buffer%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/protocol-buffer%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;protocol-buffers的基本使用&#34;&gt;Protocol Buffers的基本使用&lt;/h1&gt;
+&lt;h2 id=&#34;什么是protocol-buffers&#34;&gt;什么是Protocol buffers&lt;/h2&gt;
+&lt;p&gt;Protocol Buffer是一个由 Google 开发的协议，允许结构化数据的序列化和反序列化协议缓冲。谷歌开发它的目的是提供一种比 XML 更好的方式来使系统进行通信。因此，他们致力于使其比 XML 更简单、更小、更快、更易于维护。这个协议甚至超过了 JSON，具有更好的性能、更好的可维护性和更小的体积。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Proto生成Swagger使用文档</title>
+      <link>http://localhost:1313/proto%E7%94%9F%E6%88%90swagger%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/proto%E7%94%9F%E6%88%90swagger%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/</guid>
+      <description>&lt;h1 id=&#34;proto生成swagger使用文档&#34;&gt;Proto生成Swagger使用文档&lt;/h1&gt;
+&lt;p&gt;此文档描述了一些在proto定义过程中，常见的一些swagger描述，可以在使用的过程中进行一些参考&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

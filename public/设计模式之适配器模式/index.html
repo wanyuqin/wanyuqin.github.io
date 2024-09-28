@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>设计模式之适配器模式 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="设计模式之适配器模式
+概述
+**适配器模式：**将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装类(Wrapper),适配器模式既可以作为类结构型模式，也可以作为对象结构型模式
+
+在适配器模式定义中所提及的接口是指广义的接口，它可以表示一个方法或者方法的集合
+
+在适配器模式中，通过增加一个新的适配器类来解决接口不兼容的问题，使得没有任何关系的类可以协同工作。根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器模式和类适配器模式两种。在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承(或实现)关系
+对象适配器模式包含3个角色
+
+Target(目标抽象类): 目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类
+Adapter(适配器类): 适配器可以调用另一个接口，作为一个转换器，对Adaptee和Target进行适配。适配器类是适配器模式的核心，在对象适配器模式中，他通过继承Target并关联一个Adaptee对象使二者产生联系
+Adaptee(适配者类)：适配者即被适配的对象，它定义了一个已经存在的接口，这个接口需要适配，适配者类一般是一个具体的类，包含了客户希望使用的业务方法，在某些情况下可能没有适配者类的源代码
+
+TypeC转USB充电接口
+假设我们现在只有type-C的充电口，但是我们需要给只接受USB充电口的设备充电，这个时候我们就需要一个充电适配器来进行充电接口的转换
+package adapter
+
+import &#34;fmt&#34;
+
+// USBTarget 目标接口
+type USBTarget interface {
+	USBCharge()
+}
+
+// Adapter 适配器
+type Adapter struct {
+	Adaptee TypeCAdaptee
+}
+
+func NewAdapter(adaptee TypeCAdaptee) *Adapter {
+	return &amp;Adapter{
+		Adaptee: adaptee,
+	}
+}
+
+func (a *Adapter) USBCharge() {
+	fmt.Println(&#34;充电接口转换-&gt;USB&#34;)
+	a.Adaptee.TypeCCharge()
+}
+
+// TypeCAdaptee 适配者
+type TypeCAdaptee struct {
+}
+
+func (t *TypeCAdaptee) TypeCCharge() {
+	fmt.Println(&#34;开始充电&#34;)
+}
+这里我们定义了一个目标接口
+// USBTarget 目标接口
+type USBTarget interface {
+   USBCharge()
+}
+还有一个Type-C的充电接口，这个Type-C接口是没办法进行USB充电的
+// TypeCAdaptee 被适配者
+type TypeCAdaptee struct {
+}
+func (t *TypeCAdaptee) TypeCCharge() {
+	fmt.Println(&#34;开始充电&#34;)
+}
+如果我们手里只有Type-C的接口，是没办法使用USB的充电的，所以这里还需要有一个充电适配器">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      设计模式之适配器模式
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="设计模式之适配器模式">设计模式之适配器模式<a hidden class="anchor" aria-hidden="true" href="#设计模式之适配器模式">#</a></h1>
+<h2 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h2>
+<p>**适配器模式：**将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装类(Wrapper),适配器模式既可以作为类结构型模式，也可以作为对象结构型模式</p>
+<ul>
+<li>在适配器模式定义中所提及的接口是指广义的接口，它可以表示一个方法或者方法的集合</li>
+</ul>
+<p>在适配器模式中，通过增加一个新的适配器类来解决接口不兼容的问题，使得没有任何关系的类可以协同工作。根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器模式和类适配器模式两种。在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承(或实现)关系</p>
+<p><strong>对象适配器模式包含3个角色</strong></p>
+<ul>
+<li>Target(目标抽象类): 目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类</li>
+<li>Adapter(适配器类): 适配器可以调用另一个接口，作为一个转换器，对Adaptee和Target进行适配。适配器类是适配器模式的核心，在对象适配器模式中，他通过继承Target并关联一个Adaptee对象使二者产生联系</li>
+<li>Adaptee(适配者类)：适配者即被适配的对象，它定义了一个已经存在的接口，这个接口需要适配，适配者类一般是一个具体的类，包含了客户希望使用的业务方法，在某些情况下可能没有适配者类的源代码</li>
+</ul>
+<h2 id="typec转usb充电接口">TypeC转USB充电接口<a hidden class="anchor" aria-hidden="true" href="#typec转usb充电接口">#</a></h2>
+<p>假设我们现在只有type-C的充电口，但是我们需要给只接受USB充电口的设备充电，这个时候我们就需要一个充电适配器来进行充电接口的转换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">adapter</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// USBTarget 目标接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">USBTarget</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">USBCharge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Adapter 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Adapter</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Adaptee</span> <span style="color:#a6e22e">TypeCAdaptee</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewAdapter</span>(<span style="color:#a6e22e">adaptee</span> <span style="color:#a6e22e">TypeCAdaptee</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Adapter</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Adapter</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Adaptee</span>: <span style="color:#a6e22e">adaptee</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Adapter</span>) <span style="color:#a6e22e">USBCharge</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;充电接口转换-&gt;USB&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Adaptee</span>.<span style="color:#a6e22e">TypeCCharge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// TypeCAdaptee 适配者
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TypeCAdaptee</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TypeCAdaptee</span>) <span style="color:#a6e22e">TypeCCharge</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;开始充电&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里我们定义了一个目标接口</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// USBTarget 目标接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">USBTarget</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">USBCharge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>还有一个Type-C的充电接口，这个Type-C接口是没办法进行USB充电的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// TypeCAdaptee 被适配者
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TypeCAdaptee</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TypeCAdaptee</span>) <span style="color:#a6e22e">TypeCCharge</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;开始充电&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们手里只有Type-C的接口，是没办法使用USB的充电的，所以这里还需要有一个充电适配器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Adapter 适配器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Adapter</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Adaptee</span> <span style="color:#a6e22e">TypeCAdaptee</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewAdapter</span>(<span style="color:#a6e22e">adaptee</span> <span style="color:#a6e22e">TypeCAdaptee</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Adapter</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Adapter</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Adaptee</span>: <span style="color:#a6e22e">adaptee</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Adapter</span>) <span style="color:#a6e22e">USBCharge</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;充电接口转换-&gt;USB&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Adaptee</span>.<span style="color:#a6e22e">TypeCCharge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个充电适配器实现了USB充电的方法，在内部将充电的方法进行了转换，最后完成了USB的充电</p>
+<h2 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">adapter</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestAdapter_ChargeAdapter</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">typeCAdaptee</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">TypeCAdaptee</span>{}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">adapter</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewAdapter</span>(<span style="color:#a6e22e">typeCAdaptee</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">adapter</span>.<span style="color:#a6e22e">USBCharge</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// === RUN   TestAdapter_ChargeAdapter
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 充电接口转换，USB
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 充电
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// --- PASS: TestAdapter_ChargeAdapter (0.00s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// PASS
+</span></span></span></code></pre></div><h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<h3 id="优点">优点<a hidden class="anchor" aria-hidden="true" href="#优点">#</a></h3>
+<ol>
+<li>将目标类和适配者类接口，通过引入一个适配器类来重用现有的适配者类，无须修改原有的结构</li>
+<li>增加了类的透明性和复用性，将具体的业务实现过程封装在适配器中</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

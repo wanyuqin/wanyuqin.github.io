@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>设计模式 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    设计模式
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之基础知识 模式：在特定环境下人们解决某类重复出现问题的一套成功或有效的解决方案
+设计模式 一套被反复使用，多数人知晓的、经过分类编目的、代码设计经验的总结，使用设计模式是为了可重用代码、让代码让人更容易理解，并且保证代码的可靠性。
+根据设计模式的用途可以分为创造型、结构型、行为型
+创造型：用于描述如何创建对象 结构型：用于描述如何实现类和对象的组合 行为型：用户描述类或对象怎样交互以及如何分配职责 UML UML(Unified Modeling Language) 是一种统一建模语言，通过一些标准的图形符号和文字来对系统建模
+视图 图 模型元素 通用机制 七个面向对象的设计原则 单一职责原则 SRP 开闭原则 OCP 里氏代换原则 LSP 依赖倒转原则 DIP 接口隔离原则 ISP 合成复用原则 CRP 迪米特法则 LoD </p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%80/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之单例模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之单例模式 定义 确保某一个类只有一个实例 ，而且自行实例化并向整个系统提供这个实例
+使用场景 在实际开发中，为了节约系统资源，有时候需要确保系统中某个结构体只有唯一的一个实例，当这个实例创建成功后，无法再创建同一个类型的其他实例，所有的操作都只能基于这个唯一实例，为了确保对象的唯一性，可以通过单例模式来实现。
+概述 这里我用一个例子来对单例模式进行解释说明。众所周知，女朋友只能有一个，那么我们如何利用代码来实现这个逻辑呢。
+这里先创建一个GirFriend的接口，来避免返回一个包私有的指针
+type GirlFriend interface { Dating() // 约会 } 接下来我们在定义一个包私有的结构体，girlFriend，并且实现Dating方法
+type girlFriend struct { name string } func (g *girlFriend) Dating() { fmt.Printf(&#34;和%s去约会...\n&#34;, g.name) } 最后我们需要定义一个全局的grilFriend的指针，并且定义一个创建单例的函数
+var ( gf *girlFriend ) func NewGirlFriend(name string) GirlFriend { if gf == nil { gf = &amp;girlFriend{ name: name, } } else { fmt.Printf(&#34;还想脚踩两条船,no door &#34;) } return gf } 我们可以写一个测试方法测试一下效果
+func TestNewGirlFriend(t *testing.T) { gf := NewGirlFriend(&#34;小铃铛&#34;) gf.Dating() gf1 := NewGirlFriend(&#34;大铃铛&#34;) gf1.Dating() } // 输出结果 === RUN TestNewGirlFriend 和小铃铛去约会... 还想脚踩两条船,no door 和小铃铛去约会... --- PASS: TestNewGirlFriend (0.00s) PASS 我们可以看到，两次的调用，最后我们都是和最开始的女朋友去进行约会，是没办法脚踏两只船的，very Good !!!
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之单例模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之原型模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之原型模式 可以通过一个原型对象克隆出多个一模一样的对象，该模式称之为原型模式
+概述 **原型模式：**使用原型实例指定创建对象的种类，并且通过克隆这些原型创建新的对象，原型模式是一种对象的创建型模式
+原型模式的工作原理就是将一个原型对象传给那个要发动创建的对象，这个要发动创建的对象通过请求原型对象克隆自己来实现创建的过程，通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址；通常，对克隆产生的对象进行的修改不会对原型对象造成任何影响，每一个克隆的对象都是相互独立的
+定义 原型模式包含了三个角色
+Prototype(抽象原型类):它是声明克隆方法的接口，是所有具体原型类的公共父类，可以是抽象类也可以是接口，甚至可以是具体的实现类
+ConcretePrototype(具体原型类)：它实现在抽象原型类中声明的克隆方法，在克隆方法中返回一个自己的克隆对象
+Client(客户类):让一个原型对象克隆自己从而创建一个新的对象，在客户类中只需要直接实例化或通过工厂方法等方式创建一个原型对象，再通过该对象的克隆方法即可获得多个相同的对象
+创建忍者分身 package prototype_pattern // Prototype 抽象原型 type Prototype interface { CloneM() Prototype } // Naruto 具体原型类 type Naruto struct { Model string } func (n *Naruto) CloneM() Prototype { return &amp;Naruto{ Model: n.Model, } } // Sasuke 具体原型类 type Sasuke struct { Model string } func (s *Sasuke) CloneM() Prototype { return &amp;Sasuke{ Model: s.Model, } } // NinjaFactory 忍者工厂 type NinjaFactory interface { CreateNinja(string) Prototype } type NarutoFactory struct { } func (n *NarutoFactory) CreateNinja(model string) Prototype { return &amp;Naruto{ Model: model, } } 这里我们使用忍者的来举例，因为忍者也是可以分身的，分身和本体是一样的，但是分身的消失并不会去影响本体
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之原型模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之工厂方法模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之工厂方法模式 简单工厂模式虽然简单，但是每次需要引入新的产品的时候，由于需要传递不同的参数来创建不同的产品，就需要修改工厂的源代码。违背了开闭原则，因此就出现了工厂方法模式
+概述 在工厂方法模式中，不再提供一个统一的工厂来创建所有的产品对象，而是针对不同的产品提供不同的工厂，系统提供一个与产品等级结构对应的工厂等级结构
+定义 工厂方法模式: 定义一个用于创建对象的接口，让子类决定将那一个类实例化。工厂方法模式让一个类的实例化延迟到其子类。工厂方法模式又称为工厂模式。
+工厂方法包含了四个角色：
+Product(抽象产品)：定义产品的接口，是工厂方法模式创建对象的超类型，也是产品对象的公共父类 ConcreteProduct(具体产品):它实现了抽象产品接口，某种类型的具体产品由专门的具体工厂创建，具体工厂和具体产品之间一一对应 Factory(抽象工厂): 在抽象工厂类中，声明了工厂方法,用于返回一个产品。抽象工厂是工厂方法模式的核心，所有创建对象的工厂类都必须实现改接口 ConcreteFactory(具体工厂)：它是抽象工厂类的子类，实现了抽象工厂中定义的工厂方法，并且由客户端调用，返回一个具体产品的实例 改造 还是以简单工厂里的生产面条为例子进行改造
+package factory_method import &#34;fmt&#34; // Factory 抽象工厂 type Factory interface { FactoryMethod()Noddles } // Noddles 抽象产品 type Noddles interface { Materials() // 购买原材料 Produce() // 生产面条 } // BeefNoddlesFactory 牛肉面工厂 // 具体工厂 type BeefNoddlesFactory struct { } func (b *BeefNoddlesFactory)FactoryMethod()Noddles{ return &amp;BeefNoddles{} } // EggNoddlesFactory 鸡蛋面工厂 // 具体工厂 type EggNoddlesFactory struct { } func (e *EggNoddlesFactory)FactoryMethod()Noddles{ return &amp;EggNoddles{} } // BeefNoddles 牛肉面 // 具体产品 type BeefNoddles struct { Noddles } // EggNoddles 鸡蛋面 // 具体产品 type EggNoddles struct { Noddles } func (b *BeefNoddles) Materials() { fmt.Println(&#34;购买牛肉面原料&#34;) } func (b *BeefNoddles) Produce() { fmt.Println(&#34;生产牛肉面&#34;) } func (e *EggNoddles) Materials() { fmt.Println(&#34;购买鸡蛋面原料&#34;) } func (e *EggNoddles) Produce() { fmt.Println(&#34;生产鸡蛋面&#34;) } 测试方法
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之工厂方法模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之建造者模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之建造者模式 建造者模式又称为生成器模式，建造者模式为客户端返回的不是一个简单的产品，而是一个由多个部件组成的复杂产品
+概述 建造者模式是较为复杂的创建型模式，它将客户端与包含多个组成部分的复杂对象的创建过程分离，客户端无须知道复杂对象的内部组成部分与装配方式，只需要知道所创建的建造者类型即可。建造者关注如何一步步创建一个复杂对象，不同的建造者定义了不同的创建过程，而且具体的建造者相互独立，增加新的建造者也无须修改已有的代码，具有比较好的拓展性，建造者允许用户只通过制定复杂对象的类型和内容就可以构建他们，用户不需要知道内部的具体细节
+定义 建造者模式：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。建造者模式是一种对象创建型模式
+建造者模式包含4个角色
+Builder(抽象建造者)：它为创建一个产品Product对象的各个部件指定抽象接口，在该接口中一般声明两类方法：一类是builderPartX()，用于创建复杂对象的各个部件，另一类方法是getResult()，用于返回复杂对象。 ConcreteBuilder(具体建造者)：他实现了Builder接口，实现了各个部件的具体构造和装配方法，定义并明确了其所创建的复杂对象，也提供一个方法返回创建好的复杂产品对象 Product(产品角色)：它是被构建的复杂对象，包含多个组成部件，具体建造者创建该产品的内部表示并定义其装配过程 Director(指挥者): 它负责安排复杂对象的建造次序，指挥者与抽象建造者之间存在关联关系，可以在其construct()建造方法中调用建造者对象的部件构造与装配方法，完成复杂对象的建造，客户端一般只需要和指挥者交互 什么是复杂对象？复杂对象就是包含多个成员变量的对象
+组装电脑 我们以组装电脑为例子，假设我们需要组装不同CPU，内存，硬盘，以及显卡的电脑，我们可以把这个过程模拟成建造者模式，以下是代码实现
+package builder type Builder interface { InstallCpu() InstallMemory() InstallHardDisk() InstallMobo() InstallGpu() GetComputer() Computer } type Computer struct { Cpu string // cpu Memory string // 内存 HardDisk string // 硬盘 Mobo string // 主板 Gpu string // 显卡 } type Director struct { ComputerBuilder Builder } func NewDirector(computerBuilder Builder) *Director { return &amp;Director{ ComputerBuilder: computerBuilder, } } func (d *Director) Construct() Computer { d.ComputerBuilder.InstallCpu() d.ComputerBuilder.InstallMobo() d.ComputerBuilder.InstallHardDisk() d.ComputerBuilder.InstallMemory() d.ComputerBuilder.InstallGpu() return d.ComputerBuilder.GetComputer() } // OfficeComputer 办公电脑 type OfficeComputer struct { Computer Computer } // GameComputer 游戏电脑 type GameComputer struct { Computer Computer } func NewOfficeComputer() *OfficeComputer { return &amp;OfficeComputer{ Computer: Computer{}, } } func NewGameComputer() *GameComputer { return &amp;GameComputer{ Computer: Computer{}, } } func (o *OfficeComputer) InstallCpu() { o.Computer.Cpu = &#34;Intel H610&#34; } func (o *OfficeComputer) InstallMemory() { o.Computer.Memory = &#34;8G&#34; } func (o *OfficeComputer) InstallHardDisk() { o.Computer.HardDisk = &#34;256G&#34; } func (o *OfficeComputer) InstallMobo() { o.Computer.Mobo = &#34;华硕（ASUS）PRIME H610M-A D4主板&#34; } func (o *OfficeComputer) InstallGpu() { o.Computer.Gpu = &#34;核显&#34; } func (o *OfficeComputer) GetComputer() Computer { return o.Computer } func (g *GameComputer) InstallCpu() { g.Computer.Cpu = &#34;i5-12400&#34; } func (g *GameComputer) InstallMemory() { g.Computer.Memory = &#34;16G&#34; } func (g *GameComputer) InstallHardDisk() { g.Computer.HardDisk = &#34;500G&#34; } func (g *GameComputer) InstallMobo() { g.Computer.Mobo = &#34;华硕B660M电竞主板&#34; } func (g *GameComputer) InstallGpu() { g.Computer.Gpu = &#34;RTX3050&#34; } func (g *GameComputer) GetComputer() Computer { return g.Computer } 这里的Builder，就是一个接口，定义了一些组装的方法，同时也定义了一个GetComputer来获取最终得到的电脑
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之建造者模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之抽象工厂模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之抽象工厂模式 工厂方法模式通过引入工厂等级结构，解决了简单工厂模式中工厂类职责太重的问题，但是由于工厂方法模式中每个工厂只会生产一类产品，可能会导致存在大量的工厂。增加系统开销。可以考虑将一些相关的产品组成一个’产品族’,由同一个工厂来统一生产，这就是抽象工厂模式的思想
+产品等级结构和产品族 为了能更好的理解抽象工厂模式，这里解释两个概念
+产品等级结构: 产品等级结构就是产品继承结构，假如有一个抽象类是方便面，其子类有统一方便面，康师傅方便面，白象方便面，那么抽象方便面和具体的品牌方便面之间就构成了一个产品等级结构。抽象方便面是父类，而具体的品牌是子类。 **产品族:**在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品。例如康师傅工厂的康师傅方便面、康师傅冰红茶、康师傅矿泉水。康师傅方便面位于方便面的产品等级中，康师傅冰红茶位于冰红茶产品等级中，康师傅方便面、康师傅冰红茶构成了一个产品族 当系统所提供的工厂生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构、属于不同类型的具体产品时，就可以使用抽象工厂模式，抽象工厂模式和工厂方法模式最大的区别在于，工厂方法针对的是一个产品等级结构，而抽象工厂模式需要面对多个产品等级结构
+每个具体工厂可以生产属于一个产品族的所有产品，如果使用工厂方法模式，上图的产品需要15个工厂，而抽象工厂模式只需要5个工厂
+概述 抽象工厂模式与工厂方法相比，具体的工厂不只创建一种产品，它负责创建一族产品
+定义 抽象工厂模式:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为Kit模式，是一种对象创建型模式。
+在抽象工厂模式中有四个角色
+Abstract Factory(抽象工厂):它声明了一组用于创建一族产品的方法，每个方法对应一种产品 ConcreteFactory（具体工厂) :它实现了在抽象工厂中声明的创建产品的方法，生成了一组具体产品，这些产品构成了一个产品族，每个产品都位于某个产品等级结构中 AbstractProduct(抽象产品): 它为每种产品声明接口，在抽象产品中声明了产品的所有业务方法 Concrete Product(具体产品): 它定义具体工厂生产的具体产品对象，实现在抽象产品接口中声明的业务方法 改造 package abstract_factory import &#34;fmt&#34; // AbstractFactory 抽象工厂 type AbstractFactory interface { CreateNoddles()Noddles CreateDrink()Drink } // TongYiFactory 具体工厂 type TongYiFactory struct{ } func (t *TongYiFactory)CreateNoddles()Noddles{ return &amp;TongYiNoddles{} } func (t *TongYiFactory)CreateDrink()Drink{ return &amp;TongYiDrink{} } // KMasterFactory 具体工厂 type KMasterFactory struct { } func (k *KMasterFactory)CreateNoddles()Noddles{ return &amp;KMasterNoodles{} } func (k *KMasterFactory)CreateDrink()Drink{ return &amp;KMasterDrink{} } // Noddles 抽象产品 方便面 type Noddles interface { Produce() // 生产面条 } type TongYiNoddles struct { } func (t *TongYiNoddles) Produce() { fmt.Println(&#34;生产统一方便面&#34;) } // KMasterNoodles 具体产品 type KMasterNoodles struct { } func (k *KMasterNoodles) Produce() { fmt.Println(&#34;生产康师傅方便面&#34;) } // Drink 抽象产品 饮料 type Drink interface { Decking() // 装罐 } // TongYiDrink 具体产品 type TongYiDrink struct { } func (t *TongYiDrink) Decking() { fmt.Println(&#34;统一饮料装罐&#34;) } type KMasterDrink struct { } func (k *KMasterDrink) Decking() { fmt.Println(&#34;康师傅饮料装罐&#34;) } 抽象工厂 // AbstractFactory 抽象工厂 type AbstractFactory interface { CreateNoddles()Noddles CreateDrink()Drink } 具体工厂 // TongYiFactory 具体工厂 type TongYiFactory struct{ } func (t *TongYiFactory)CreateNoddles()Noddles{ return &amp;TongYiNoddles{} } func (t *TongYiFactory)CreateDrink()Drink{ return &amp;TongYiDrink{} } // KMasterFactory 具体工厂 type KMasterFactory struct { } func (k *KMasterFactory)CreateNoddles()Noddles{ return &amp;KMasterNoodles{} } func (k *KMasterFactory)CreateDrink()Drink{ return &amp;KMasterDrink{} } 抽象产品 // Noddles 抽象产品 方便面 type Noddles interface { Produce() // 生产面条 } // Drink 抽象产品 饮料 type Drink interface { Decking() // 装罐 } 具体产品 type KMasterDrink struct { } func (k *KMasterDrink) Decking() { fmt.Println(&#34;康师傅饮料装罐&#34;) } // KMasterNoodles 具体产品 type KMasterNoodles struct { } func (k *KMasterNoodles) Produce() { fmt.Println(&#34;生产康师傅方便面&#34;) } type TongYiNoddles struct { } func (t *TongYiNoddles) Produce() { fmt.Println(&#34;生产统一方便面&#34;) } // TongYiDrink 具体产品 type TongYiDrink struct { } func (t *TongYiDrink) Decking() { fmt.Println(&#34;统一饮料装罐&#34;) } 测试 func TestAbstractFactory(t *testing.T) { var factory AbstractFactory factory = &amp;TongYiFactory{} factory.CreateDrink().Decking() factory.CreateNoddles().Produce() } // === RUN TestAbstractFactory // 统一饮料装罐 // 生产统一方便面 // --- PASS: TestAbstractFactory (0.00s) // PASS 总结 优点 增加一个新的产品族很方便，无须修改已有系统，符合开闭原则 当一个产品族的多个对象被设计在一起工作时，能保证客户端始终只使用同一个产品族中的对象 缺点 增加新的产品等级结构麻烦，需要对原有的系统进行较大的修改，甚至需要修改抽象层的代码，会带来比较大的不方便，违背了开闭原则
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之抽象工厂模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之桥接模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之桥接模式 概述 桥接模式是一种结构型设计模式，系统中加入某个类存在两种独立变化的维度，可以通过该模式将这两个维度分离出来
+**桥接模式：**将抽象部分与其实现部分分离，使他们都可以独立变化，是一种对象结构型模式，又称为柄体模式或接口模式
+桥接模式包含了4个角色：
+Abstraction(抽象类)：用于定义抽象类的接口，既可以包含抽象业务方法，也可以包含具体业务方法 RefinedAbstraction(扩充抽象类)：扩充由Abstraction定义的接口，实现了Abstraction中声明的业务方法，并且可以调用在Implementor中定义的业务方法。 Implementor(实现类接口)：定义实现类的接口，它提供仅仅是一些基本操作，而Abstraction定义的接口会包含更多，更复杂的操作，在Abstraction中不仅可以拥有自己的方法，还可以调用Implementor中定义的方法 ConcreteImplementor(具体实现类)：具体实现Implementor接口，在不同的实现类中提供基本操作不同的实现 在使用桥接模式的时候需要识别出类具有两种独立变化的维度
+数字和花色组合扑克牌 我们都知道扑克牌都有花色和数字，不同的花色和不同的数字可以用来表示不同的牌。所以我们这里使用扑克牌来举例，因为花色和数字正好是两个独立的维度
+package bridge import &#34;fmt&#34; // AbstractionPoker 抽象类接口 type AbstractionPoker interface { Combination() // 组合 } // PokerImplementor 实现类接口 type PokerImplementor interface { SetColor(string) SetNum() } // NumberOne 具体实现类 type NumberOne struct { } func NewNumberOne() PokerImplementor { return &amp;NumberOne{} } func (n *NumberOne) SetNum() { fmt.Println(&#34;poker number is one&#34;) } func (n *NumberOne) SetColor(color string) { fmt.Printf(&#34;pocker color is %s\n&#34;, color) } type NumberTwo struct { } func NewNumberTwo() PokerImplementor{ return &amp;NumberTwo{} } func (n *NumberTwo) SetNum() { fmt.Println(&#34;poker number is two&#34;) } func (n *NumberTwo) SetColor(color string) { fmt.Printf(&#34;pocker color is %s\n&#34;, color) } // ClubPoker 梅花扑克 拓展实现类 type ClubPoker struct { pokerImplementor PokerImplementor } func NewClubPoker(impl PokerImplementor) *ClubPoker { return &amp;ClubPoker{ pokerImplementor: impl, } } func (c *ClubPoker) Combination() { c.pokerImplementor.SetColor(&#34;Club&#34;) c.pokerImplementor.SetNum() } // HeartsPoker 拓展实现类 type HeartsPoker struct { pokerImplementor PokerImplementor } func (h *HeartsPoker)Combination() { h.pokerImplementor.SetColor(&#34;Heart&#34;) h.pokerImplementor.SetNum() } func NewHeartPoker(impl PokerImplementor) *HeartsPoker { return &amp;HeartsPoker{ pokerImplementor: impl, } } 首先我们要明确，拓展实现类，实现的事Abstraction中的方法，而具体实现类实现的是Implementor中的方法，Implementor中定义了一些基础的方法，Abstraction中定义了复杂的方法。
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之桥接模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之简单工厂模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之简单工厂模式 工厂模式是最常用的一类创造型设计模式。通常说的工厂模式是指工厂方法模式，他是使用频率最高的工厂模式。这里介绍的简单工厂模式是工厂方法模式的&#34;小弟&#34;
+方便面制作 假设现在需要有一个程序去控制方便面的生产，可以根据不同的方便面口味生产出不通的方便面，最简单的设计方法就是如下所示
+package simple_factory type Noodles struct { NType string } func NewNoodles(NType string)*Noodles{ noodles := Noodles{ NType: NType, } return &amp;noodles } func (n *Noodles)Materials() { if n.NType==&#34;红烧牛肉面&#34;{ // 购买红烧牛肉面原料 }else if n.NType == &#34;酸菜牛肉面&#34;{ // 购买酸菜牛肉面原料 }else if n.NType==&#34;香辣牛肉面&#34; { // 购买香辣牛肉面原料 } } func (n *Noodles)Produce() { if n.NType==&#34;红烧牛肉面&#34;{ // 生产红烧牛肉面 }else if n.NType == &#34;酸菜牛肉面&#34;{ // 生产酸菜牛肉面 }else if n.NType==&#34;香辣牛肉面&#34; { // 生产香辣牛肉面 } } 但是这样的方法存在很多问题.
+代码中存在大量的if…else… 会影响后期的维护，以及系统的性能 在增加新的口味的方便面的时候，需要修改Noddles的代码，违反了开闭原则 对方便面的初始化和生产都在一个结构体下去实现，违反了单一职责原则 等等问题
+简单工厂模式概述 首先我们要创建各种不同的结构体(例如不同口味的方便面)，这些结构体称之为具体的产品，将他们的公共代码进行抽象和提取放在一个抽象的结构体中，每一个产品结构体都是抽象产品的一个实现，然后提供一个工厂用来创建各个产品，在工厂中提供一个创建产品的方法，该方法可以根据传入不同的参数来创建不同的具体产品实例，客户端只需要调用工厂类的方法传入对应的参数即可得到一个产品实例
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之简单工厂模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">设计模式之适配器模式
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>设计模式之适配器模式 概述 **适配器模式：**将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，其别名为包装类(Wrapper),适配器模式既可以作为类结构型模式，也可以作为对象结构型模式
+在适配器模式定义中所提及的接口是指广义的接口，它可以表示一个方法或者方法的集合 在适配器模式中，通过增加一个新的适配器类来解决接口不兼容的问题，使得没有任何关系的类可以协同工作。根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器模式和类适配器模式两种。在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承(或实现)关系
+对象适配器模式包含3个角色
+Target(目标抽象类): 目标抽象类定义客户所需接口，可以是一个抽象类或接口，也可以是具体类 Adapter(适配器类): 适配器可以调用另一个接口，作为一个转换器，对Adaptee和Target进行适配。适配器类是适配器模式的核心，在对象适配器模式中，他通过继承Target并关联一个Adaptee对象使二者产生联系 Adaptee(适配者类)：适配者即被适配的对象，它定义了一个已经存在的接口，这个接口需要适配，适配者类一般是一个具体的类，包含了客户希望使用的业务方法，在某些情况下可能没有适配者类的源代码 TypeC转USB充电接口 假设我们现在只有type-C的充电口，但是我们需要给只接受USB充电口的设备充电，这个时候我们就需要一个充电适配器来进行充电接口的转换
+package adapter import &#34;fmt&#34; // USBTarget 目标接口 type USBTarget interface { USBCharge() } // Adapter 适配器 type Adapter struct { Adaptee TypeCAdaptee } func NewAdapter(adaptee TypeCAdaptee) *Adapter { return &amp;Adapter{ Adaptee: adaptee, } } func (a *Adapter) USBCharge() { fmt.Println(&#34;充电接口转换-&gt;USB&#34;) a.Adaptee.TypeCCharge() } // TypeCAdaptee 适配者 type TypeCAdaptee struct { } func (t *TypeCAdaptee) TypeCCharge() { fmt.Println(&#34;开始充电&#34;) } 这里我们定义了一个目标接口
+// USBTarget 目标接口 type USBTarget interface { USBCharge() } 还有一个Type-C的充电接口，这个Type-C接口是没办法进行USB充电的
+// TypeCAdaptee 被适配者 type TypeCAdaptee struct { } func (t *TypeCAdaptee) TypeCCharge() { fmt.Println(&#34;开始充电&#34;) } 如果我们手里只有Type-C的接口，是没办法使用USB的充电的，所以这里还需要有一个充电适配器
+...</p>
+  </div>
+  <footer class="entry-footer"></footer>
+  <a class="entry-link" aria-label="post link to 设计模式之适配器模式" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Grpc-Gateway on My New Hugo Site</title>
+    <link>http://localhost:1313/tags/grpc-gateway/</link>
+    <description>Recent content in Grpc-Gateway on My New Hugo Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/tags/grpc-gateway/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>buf的基本使用</title>
+      <link>http://localhost:1313/buf%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/buf%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;buf的基本使用&#34;&gt;buf的基本使用&lt;/h1&gt;&#xA;&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&#xA;&lt;p&gt;Buf 是一个用来生成和管理Protobuf的工具，可以是我们更加高效的构建Protobuf API&lt;/p&gt;&#xA;&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://docs.buf.build/installation&#34;&gt;官方安装&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;&#xA;&lt;p&gt;TODO&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>grpc-gateway的基本使用</title>
+      <link>http://localhost:1313/grpc-gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/grpc-gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;grpc-gateway的基本使用&#34;&gt;grpc-gateway的基本使用&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;grpc-gateway是protoc的以一个插件，它会读取proto文件中的grpc服务的定义并将其生成RestFul JSON API,并将其反向代理到我们的grpc服务中&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

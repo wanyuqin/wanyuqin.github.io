@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Sync包之Sync.Map | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="Sync包之Sync.Map
+简介
+Sync包下的map很像是Go的map[interface{}]interface{}，但是对于普通的map来说，sync.Map可以保证在多个goroutine的并发使用是安全的，无需额外添加锁来进行控制">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.map/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.map/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Sync包之Sync.Map
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="sync包之syncmap">Sync包之Sync.Map<a hidden class="anchor" aria-hidden="true" href="#sync包之syncmap">#</a></h1>
+<h2 id="简介">简介<a hidden class="anchor" aria-hidden="true" href="#简介">#</a></h2>
+<p>Sync包下的map很像是Go的map[interface{}]interface{}，但是对于普通的map来说，sync.Map可以保证在多个goroutine的并发使用是安全的，无需额外添加锁来进行控制</p>
+<h2 id="方法">方法<a hidden class="anchor" aria-hidden="true" href="#方法">#</a></h2>
+<h3 id="func--mapstorekeyvalue-any">func( * Map)Store(key,value any)<a hidden class="anchor" aria-hidden="true" href="#func--mapstorekeyvalue-any">#</a></h3>
+<p>将一个key,value存入map中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>,<span style="color:#e6db74">&#34;Leo&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="func-mapdeletekey-any">func(* Map)Delete(key any)<a hidden class="anchor" aria-hidden="true" href="#func-mapdeletekey-any">#</a></h3>
+<p>将一个key从map中删除</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Delete</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="func-maploadkey-any-value-any-ok-bool">func(* Map)Load(key any) (value any, ok bool)<a hidden class="anchor" aria-hidden="true" href="#func-maploadkey-any-value-any-ok-bool">#</a></h3>
+<p>从map中获取一个Key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#e6db74">&#34;Leo&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Load</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The key not exist&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="func-maploadanddeletekey-any-value-any-loaded-bool">func(* Map)LoadAndDelete(key any) (value any, loaded bool)<a hidden class="anchor" aria-hidden="true" href="#func-maploadanddeletekey-any-value-any-loaded-bool">#</a></h3>
+<p>从map中获取一个key，并且将key删除，如果key存在那么loaded会返回true，并且value就是map中存的值，如果key不存在那么loaded会返回一个false，并且value为nil</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#e6db74">&#34;Leo&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">loaded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">LoadAndDelete</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;values is %v,is loaded %v \n&#34;</span>, <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">loaded</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">loaded</span> = <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">LoadAndDelete</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;values is %v,is loaded %v \n&#34;</span>, <span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">loaded</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="func-m-map-loadorstorekey-value-any-actual-any-loaded-bool">func (m *Map) LoadOrStore(key, value any) (actual any, loaded bool)<a hidden class="anchor" aria-hidden="true" href="#func-m-map-loadorstorekey-value-any-actual-any-loaded-bool">#</a></h3>
+<p>从map中加载一个key，如果key不存在，那么就会将value存放在key中，返回value，loaded为false，如果key存在则返回value，loaded为true</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">actual</span>, <span style="color:#a6e22e">loaded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">LoadOrStore</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#e6db74">&#34;Leo&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;actual %v,is loaded %v \n&#34;</span>, <span style="color:#a6e22e">actual</span>, <span style="color:#a6e22e">loaded</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">actual</span>, <span style="color:#a6e22e">loaded</span> = <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">LoadOrStore</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;actual %v,is loaded %v \n&#34;</span>, <span style="color:#a6e22e">actual</span>, <span style="color:#a6e22e">loaded</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">value</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Load</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="func-m-map-rangef-funckey-value-any-bool">func (m *Map) Range(f func(key, value any) bool)<a hidden class="anchor" aria-hidden="true" href="#func-m-map-rangef-funckey-value-any-bool">#</a></h3>
+<p>迭代出map中的key，value,如果回调函数中返回false，那么就会停止迭代，如果返回true，那么就会继续迭代</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">smm</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Map</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#e6db74">&#34;Leo&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Store</span>(<span style="color:#e6db74">&#34;Jack&#34;</span>, <span style="color:#e6db74">&#34;Chen&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">smm</span>.<span style="color:#a6e22e">Range</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span> <span style="color:#a6e22e">any</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Key: %v - Value: %v\n&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

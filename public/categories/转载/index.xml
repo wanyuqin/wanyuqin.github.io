@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>转载 on My New Hugo Site</title>
+    <link>http://localhost:1313/categories/%E8%BD%AC%E8%BD%BD/</link>
+    <description>Recent content in 转载 on My New Hugo Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/categories/%E8%BD%AC%E8%BD%BD/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>人体系统调优不完全指南</title>
+      <link>http://localhost:1313/humansystemoptimization/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/humansystemoptimization/readme/</guid>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;&#xA;&lt;p&gt;去年 5 月曾经写了一篇文章介绍了下 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/371254789&#34;&gt;Lex Fridman 大佬的日常生活安排&lt;/a&gt;，后续我也根据他的方法对自己的日常生活做了一系列规范和改进。这一年整体实行下来，效果还是非常显著的，本文的最后会对我的一些实践以及借助的工具做一些分享。&lt;/p&gt;&#xA;&lt;p&gt;最近几个月，偶然在油管上看到了个 &lt;a href=&#34;https://youtu.be/2ekdc6jCu2E&#34;&gt;Rich Roll 采访 Andrew Huberman 的 podcast&lt;/a&gt;，介绍了如何提升我们日常工作，学习表现的相关神经科学原理与可以利用的“工具”，瞬间打开了一扇新世界的大门。后续又一连追了好几集 Huberman 自己的 podcast，从各个方面了解了一下跟我们日常生活，健康，学习，工作，锻炼等方面相关的知识。与其它很多讲“养生”的文章和视频最大的区别在于，Huberman 本身是斯坦福的神经科学教授，其中讲述的内容都是&lt;strong&gt;来自于高质量，peer reviewed 的科学研究成果&lt;/strong&gt;，从机体工作原理出发，非常细致地介绍了相关的实验和结论，并给出了很多实操建议（很多都是零成本，不是搞推销的……）。&lt;/p&gt;&#xA;&lt;p&gt;通过一系列的学习，逐渐有种学习了各种人类的“组成和操作原理”的感觉。通过一系列的工具和实践，我们也可以&lt;strong&gt;像调优软件程序那样来“调优”我们自身的人体系统&lt;/strong&gt;。这篇文章就来介绍一些相关的知识内容。注意，原版的 podcast 中有非常多专业性的阐述，在这篇文章中基本都去掉了，尽量以故事性的描述来讲解，相对会比较好理解。当然准确性也会因此有所下降，如果希望获取更专业的内容，强烈建议观看 &lt;a href=&#34;https://hubermanlab.com/&#34;&gt;原版的 podcast 内容&lt;/a&gt;。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

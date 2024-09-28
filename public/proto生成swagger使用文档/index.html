@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Proto生成Swagger使用文档 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="Proto生成Swagger使用文档
+此文档描述了一些在proto定义过程中，常见的一些swagger描述，可以在使用的过程中进行一些参考">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/proto%E7%94%9F%E6%88%90swagger%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/proto%E7%94%9F%E6%88%90swagger%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Proto生成Swagger使用文档
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="proto生成swagger使用文档">Proto生成Swagger使用文档<a hidden class="anchor" aria-hidden="true" href="#proto生成swagger使用文档">#</a></h1>
+<p>此文档描述了一些在proto定义过程中，常见的一些swagger描述，可以在使用的过程中进行一些参考</p>
+<h3 id="grpc-gateway-生成http服务grpc-gatewayhttpsgithubcomgrpc-ecosystemgrpc-gateway"><strong>grpc-gateway 生成http服务</strong><a href="https://github.com/grpc-ecosystem/grpc-gateway">grpc-gateway</a><a hidden class="anchor" aria-hidden="true" href="#grpc-gateway-生成http服务grpc-gatewayhttpsgithubcomgrpc-ecosystemgrpc-gateway">#</a></h3>
+<ol>
+<li>不修改protoc文件，根据默认规则生成相应的http路由</li>
+<li>修改protoc文件，根据添加的注释生成自定义http路由</li>
+<li>不修改protoc文件，定义一个配置文件，根据配置文件生成自定义http路由</li>
+</ol>
+<h3 id="修改protoc文件添加googleapi相关内容生成自定义http路由">修改protoc文件，添加google/api相关内容生成自定义http路由<a hidden class="anchor" aria-hidden="true" href="#修改protoc文件添加googleapi相关内容生成自定义http路由">#</a></h3>
+<ol>
+<li>API相关规范 <a href="https://google.aip.dev/127">AIP-127: HTTP and gRPC Transcoding</a></li>
+<li><a href="https://github.com/googleapis/googleapis/tree/master/google/api">google/api相关参数</a>
+1.</li>
+</ol>
+<h3 id="添加validate相关内容生成对应的校验规则">添加validate相关内容生成对应的校验规则<a hidden class="anchor" aria-hidden="true" href="#添加validate相关内容生成对应的校验规则">#</a></h3>
+<ol>
+<li><a href="https://github.com/bufbuild/protoc-gen-validate/blob/main/validate/validate.proto">validate相关库</a></li>
+</ol>
+<ul>
+<li><a href="https://github.com/bufbuild/protoc-gen-validate/blob/main/README.md">2.</a> <a href="https://github.com/bufbuild/protoc-gen-validate/blob/main/README.md">使用示例</a></li>
+</ul>
+<h3 id="swag文档生成"><strong>swag文档生成</strong><a hidden class="anchor" aria-hidden="true" href="#swag文档生成">#</a></h3>
+<ol>
+<li><a href="https://github.com/grpc-ecosystem/grpc-gateway/tree/main/protoc-gen-openapiv2">protoc-gen-openapiv2插件</a></li>
+<li><a href="https://github.com/grpc-ecosystem/grpc-gateway/tree/main/protoc-gen-openapiv2/options">openapiv2/options相关参数</a></li>
+<li><a href="https://grpc-ecosystem.github.io/grpc-gateway/docs/mapping/customizing_openapi_output/">customizing_openapi</a></li>
+<li><a href="https://github.com/grpc-ecosystem/grpc-gateway/blob/main/examples/internal/proto/examplepb/a_bit_of_everything.proto">使用示例</a></li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/proto3#options">option相关用法</a></li>
+<li><strong>protoc-gen-openapiv2</strong> 会根据 google.api 和  grpc.gateway.protoc_gen_openapiv2.options 生成相应的swag文件</li>
+</ol>
+<h4 id="swagger-option">Swagger Option<a hidden class="anchor" aria-hidden="true" href="#swagger-option">#</a></h4>
+<h5 id="swagger基础信息">swagger基础信息<a hidden class="anchor" aria-hidden="true" href="#swagger基础信息">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">option</span> (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    info<span style="color:#f92672">:</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        title<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;a swagger test demo&#34;</span>, <span style="color:#75715e">// 应用标题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        version<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;0.1&#34;</span>, <span style="color:#75715e">//提供的API版本
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        contact<span style="color:#f92672">:</span> {<span style="color:#75715e">// 公开API联系信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            name<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Ethan Leo&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            url<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            email<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ethanleo@yeah.net&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    base_path<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/v1&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    host<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;localhost&#34;</span>,<span style="color:#75715e">// api host
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    schemes<span style="color:#f92672">:</span> [HTTP, HTTPS] <span style="color:#75715e">// API 协议 HTTP HTTPS  WS WSS;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h5 id="需要的依赖"><strong>需要的依赖</strong><a hidden class="anchor" aria-hidden="true" href="#需要的依赖">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;protoc-gen-openapiv2/options/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h5 id="接口定义">接口定义<a hidden class="anchor" aria-hidden="true" href="#接口定义">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">rpc</span> CreateUser (CreateUserRequest) <span style="color:#66d9ef">returns</span> (CreateUserResponse) {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">option</span> (google.api.http) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        post<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/v1/users&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        body<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;*&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">option</span> (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        summary<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;创建用户&#34;</span> <span style="color:#75715e">// swagger 接口名称
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;创建用户&#34;</span> <span style="color:#75715e">// swagger 接口描述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        tags<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;用户&#34;</span> <span style="color:#75715e">// swagger 标签
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        schemes<span style="color:#f92672">:</span> [HTTP, HTTPS], <span style="color:#75715e">// 支持的协议
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>};<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>在每个rpc的定义中添加两个类型的options</p>
+<ul>
+<li>google.api.http 中定义了接口的路径以及请求方法</li>
+<li>grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation 定义了接口的名称以及接口的描述等信息</li>
+</ul>
+<h5 id="需要的依赖-1"><strong>需要的依赖</strong><a hidden class="anchor" aria-hidden="true" href="#需要的依赖-1">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;google/api/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;protoc-gen-openapiv2/options/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h5 id="参数定义">参数定义<a hidden class="anchor" aria-hidden="true" href="#参数定义">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">User</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;姓名&#34;</span>, <span style="color:#75715e">// 参数的名称
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Ethan&#34;</span>, <span style="color:#75715e">// 参数默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        min_length<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// 参数最小值 备注
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        max_length<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>, <span style="color:#75715e">// 参数最大值 备注
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (google.api.field_behavior) <span style="color:#f92672">=</span> REQUIRED, <span style="color:#75715e">// 是否必须
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">string</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            min_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// 最小长度 校验规则
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            max_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>, <span style="color:#75715e">// 最大长度 校验规则
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> age <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;年龄&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            type<span style="color:#f92672">:</span> INTEGER,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">int32</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            gte<span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    Hobby hobby <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;爱好&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;HOBBY_DANCE&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        enum<span style="color:#f92672">:</span> [<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            <span style="color:#e6db74">&#34;1&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            <span style="color:#e6db74">&#34;2&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        ],<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        type<span style="color:#f92672">:</span> INTEGER,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    }, (google.api.field_behavior) <span style="color:#f92672">=</span> REQUIRED,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">enum</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            in<span style="color:#f92672">:</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li>grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field 中定义了一些参数字段的备注信息</li>
+<li>google.api.field_behavior 中指定了参数是否必须（默认生成的swagger文档中是非必须）REQUIRED 指定字段必须</li>
+<li>validate.rules 指定了字段的校验规则</li>
+</ul>
+<h5 id="需要的依赖-2"><strong>需要的依赖</strong><a hidden class="anchor" aria-hidden="true" href="#需要的依赖-2">#</a></h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;google/api/field_behavior.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;validate/validate.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;protoc-gen-openapiv2/options/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h5 id="注意事项">注意事项<a hidden class="anchor" aria-hidden="true" href="#注意事项">#</a></h5>
+<p>在枚举进行注释的时候需要在枚举的定义上面加入<code> .</code> 才会让注释生效 <a href="https://github.com/grpc-ecosystem/grpc-gateway/issues/2670#issuecomment-1257679009">https://github.com/grpc-ecosystem/grpc-gateway/issues/2670#issuecomment-1257679009</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span><span style="color:#75715e">// Hobby is Hobby.       
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">enum</span> Hobby {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 默认
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_UNSPECIFIED <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 跳舞
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_DANCE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 唱歌
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_SING <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="完整示例">完整示例<a hidden class="anchor" aria-hidden="true" href="#完整示例">#</a></h3>
+<h3 id="proto文件">proto文件<a hidden class="anchor" aria-hidden="true" href="#proto文件">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ProtoBuf" data-lang="ProtoBuf"><span style="display:flex;"><span>syntax <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;proto3&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#f92672">package</span> tutorial;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;google/api/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;google/api/field_behavior.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;protoc-gen-openapiv2/options/annotations.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;validate/validate.proto&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">option</span> go_package <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;grpc-gateway-demo/gen/proto/v1;pb&#34;</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">option</span> (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    info<span style="color:#f92672">:</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        title<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;a swagger test demo&#34;</span>, <span style="color:#75715e">// 应用标题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        version<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;0.1&#34;</span>, <span style="color:#75715e">//提供的API版本
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        contact<span style="color:#f92672">:</span> {<span style="color:#75715e">// 公开API联系信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            name<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Ethan Leo&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            url<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            email<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ethanleo@yeah.net&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    base_path<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/v1&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    host<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;localhost&#34;</span>,<span style="color:#75715e">// api host
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    schemes<span style="color:#f92672">:</span> [HTTP, HTTPS] <span style="color:#75715e">// API 协议 HTTP HTTPS  WS WSS;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">service</span> UserService {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">rpc</span> CreateUser (CreateUserRequest) <span style="color:#66d9ef">returns</span> (CreateUserResponse) {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">option</span> (google.api.http) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            post<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/v1/users&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            body<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;*&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">option</span> (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            summary<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;创建用户&#34;</span> <span style="color:#75715e">// swagger 接口名称
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;创建用户&#34;</span> <span style="color:#75715e">// swagger 接口描述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            tags<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;用户&#34;</span> <span style="color:#75715e">// swagger 标签
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            schemes<span style="color:#f92672">:</span> [HTTP, HTTPS],<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">rpc</span> GetUser (GetUserRequest) <span style="color:#66d9ef">returns</span> (User) {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">option</span> (google.api.http) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            get<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/v1/users/{id}&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">option</span> (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            summary<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;获取用户&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            tags<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;用户&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;根据用户ID获取用户&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    };<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">User</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> name <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;姓名&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Ethan&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        min_length<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// 会在swagger的备注中生成，对实际代码没有影响
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        max_length<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (google.api.field_behavior) <span style="color:#f92672">=</span> REQUIRED,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">string</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            min_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#75715e">// 会生成validate函数,调用时进行参数校验
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            max_len<span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>, <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">int32</span> age <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;年龄&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;0&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            type<span style="color:#f92672">:</span> INTEGER,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        },<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">int32</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            gte<span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    Hobby hobby <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        description<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;爱好&#34;</span>,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    }, (google.api.field_behavior) <span style="color:#f92672">=</span> REQUIRED,<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        (validate.rules)<span style="color:#f92672">.</span><span style="color:#66d9ef">enum</span> <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            in<span style="color:#f92672">:</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">// Hobby is Hobby.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">enum</span> Hobby {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 默认
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_UNSPECIFIED <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 跳舞
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_DANCE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e">// 唱歌
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HOBBY_SING <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">GetUserRequest</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) <span style="color:#f92672">=</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        field_configuration<span style="color:#f92672">:</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            path_param_name<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;user_id&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    }];<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">CreateUserRequest</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    User user <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">message</span> <span style="color:#a6e22e">CreateUserResponse</span> {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">message</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="生成的swagger-json">生成的swagger json<a hidden class="anchor" aria-hidden="true" href="#生成的swagger-json">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JSON" data-lang="JSON"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;swagger&#34;</span>: <span style="color:#e6db74">&#34;2.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;info&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;a swagger test demo&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;version&#34;</span>: <span style="color:#e6db74">&#34;0.1&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;contact&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Ethan Leo&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;ethanleo@yeah.net&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;tags&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;UserService&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;host&#34;</span>: <span style="color:#e6db74">&#34;localhost&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;basePath&#34;</span>: <span style="color:#e6db74">&#34;/v1&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;schemes&#34;</span>: [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;http&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;https&#34;</span>
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;consumes&#34;</span>: [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;application/json&#34;</span>
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;produces&#34;</span>: [
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;application/json&#34;</span>
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;paths&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;/v1/users&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;post&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;summary&#34;</span>: <span style="color:#e6db74">&#34;创建用户&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;创建用户&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;operationId&#34;</span>: <span style="color:#e6db74">&#34;UserService_CreateUser&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;responses&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;200&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;A successful response.&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;schema&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/tutorialCreateUserResponse&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;default&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;An unexpected error response.&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;schema&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/rpcStatus&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;parameters&#34;</span>: [
+</span></span><span style="display:flex;"><span>          {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;body&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;in&#34;</span>: <span style="color:#e6db74">&#34;body&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;required&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;schema&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/tutorialCreateUserRequest&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;tags&#34;</span>: [
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;用户&#34;</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;/v1/users/{id}&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;get&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;summary&#34;</span>: <span style="color:#e6db74">&#34;获取用户&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;根据用户ID获取用户&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;operationId&#34;</span>: <span style="color:#e6db74">&#34;UserService_GetUser&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;responses&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;200&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;A successful response.&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;schema&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/tutorialUser&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          },
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;default&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;An unexpected error response.&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;schema&#34;</span>: {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/rpcStatus&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;parameters&#34;</span>: [
+</span></span><span style="display:flex;"><span>          {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;id&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;in&#34;</span>: <span style="color:#e6db74">&#34;path&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;required&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;tags&#34;</span>: [
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;用户&#34;</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;definitions&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protobufAny&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;@type&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;additionalProperties&#34;</span>: {}
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;rpcStatus&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;code&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;integer&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;format&#34;</span>: <span style="color:#e6db74">&#34;int32&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;message&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;details&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;array&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;items&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/protobufAny&#34;</span>
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;tutorialCreateUserRequest&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;user&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/tutorialUser&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;tutorialCreateUserResponse&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;message&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;tutorialHobby&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;enum&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;HOBBY_UNSPECIFIED&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;HOBBY_DANCE&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;HOBBY_SING&#34;</span>
+</span></span><span style="display:flex;"><span>      ],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;default&#34;</span>: <span style="color:#e6db74">&#34;HOBBY_UNSPECIFIED&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;Hobby is Hobby.\n\n - HOBBY_UNSPECIFIED: 默认\n - HOBBY_DANCE: 跳舞\n - HOBBY_SING: 唱歌&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;tutorialUser&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;object&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;id&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;name&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;string&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;default&#34;</span>: <span style="color:#e6db74">&#34;Ethan&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;姓名&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;maxLength&#34;</span>: <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;minLength&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;required&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;name&#34;</span>
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;age&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;integer&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;format&#34;</span>: <span style="color:#e6db74">&#34;int32&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;default&#34;</span>: <span style="color:#e6db74">&#34;0&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;年龄&#34;</span>
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;hobby&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;$ref&#34;</span>: <span style="color:#e6db74">&#34;#/definitions/tutorialHobby&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;description&#34;</span>: <span style="color:#e6db74">&#34;爱好&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;required&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;name&#34;</span>
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="导入yapi">导入Yapi<a hidden class="anchor" aria-hidden="true" href="#导入yapi">#</a></h3>
+<p><img loading="lazy" src="https://wowjoycom.feishu.cn/space/api/box/stream/download/asynccode/?code=NjJhYTE1ZWZmMThhMjQ1YTE3NTc2YjVhNmY5YjAwY2NfbUFOR1NENzdaekRvZlNMdEtYNDhWZ0NpOHhEVzNXcDNfVG9rZW46Ym94Y255YWx5RVRGaGZSOWdOelFKRmZvQ3FmXzE2Nzg2NzMxMDk6MTY3ODY3NjcwOV9WNA" alt="img"  />
+</p>
+<p><img loading="lazy" src="https://wowjoycom.feishu.cn/space/api/box/stream/download/asynccode/?code=MTU1YjIyOWE1ZmE2OGMzZjA4MzA4NzBmYTVlNmQ1MTJfT2NRaTJmQUZNRjZYQ0hnVmZrSXczQTNUWFloZVc4NWZfVG9rZW46Ym94Y240ZTlVWTc0M3RZMFlCS203NnZMQVNlXzE2Nzg2NzMxMDk6MTY3ODY3NjcwOV9WNA" alt="img"  />
+</p>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

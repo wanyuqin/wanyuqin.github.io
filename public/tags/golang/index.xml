@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on My New Hugo Site</title>
+    <link>http://localhost:1313/tags/golang/</link>
+    <description>Recent content in Golang on My New Hugo Site</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Context包之Context</title>
+      <link>http://localhost:1313/context%E5%8C%85%E4%B9%8Bcontext/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/context%E5%8C%85%E4%B9%8Bcontext/</guid>
+      <description>&lt;h1 id=&#34;context包之context&#34;&gt;Context包之Context&lt;/h1&gt;&#xA;&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;&#xA;&lt;p&gt;Context意思为&amp;quot;上下文&amp;quot;,主要的作用是用来在goroutine之间传递上下文的信息。上下文包含的功能有：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;k-v&lt;/li&gt;&#xA;&lt;li&gt;取消信号&lt;/li&gt;&#xA;&lt;li&gt;超时时间&lt;/li&gt;&#xA;&lt;li&gt;截止时间&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;上下文是可以进行传播的，也就是说通过调用一些方法可以由父级派生出子级&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GMP模型</title>
+      <link>http://localhost:1313/golang%E7%9A%84gmp%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/golang%E7%9A%84gmp%E6%A8%A1%E5%9E%8B/</guid>
+      <description>&lt;h1 id=&#34;golang的gmp模型&#34;&gt;Golang的GMP模型&lt;/h1&gt;&#xA;&lt;h3 id=&#34;golang对协程的处理&#34;&gt;Golang对协程的处理&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ethanleo.top/uPic/image-20220824200321748.png&#34; alt=&#34;image-20220824200321748&#34;&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>go context的基本使用</title>
+      <link>http://localhost:1313/go-context%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/go-context%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;go-context的基本使用&#34;&gt;Go Context的基本使用&lt;/h1&gt;&#xA;&lt;p&gt;此文章主要是用来介绍一下golang里面context的使用，因为之前一直不太清楚context的用法，以及context的一些基本特性。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>golang之泛型</title>
+      <link>http://localhost:1313/golang%E4%B9%8B%E6%B3%9B%E5%9E%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/golang%E4%B9%8B%E6%B3%9B%E5%9E%8B/</guid>
+      <description>&lt;h1 id=&#34;golang之泛型&#34;&gt;golang之泛型&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Golang的workspace的使用</title>
+      <link>http://localhost:1313/golang%E7%9A%84workspace%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/golang%E7%9A%84workspace%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h1 id=&#34;什么是go的workspaces&#34;&gt;什么是go的workspaces?&lt;/h1&gt;&#xA;&lt;p&gt;go在1.18的时候发布了workspaces的概念[https://go.dev/doc/tutorial/workspaces]，可以让我们在编写多模块的项目的时候，变得更加的方便&lt;/p&gt;&#xA;&lt;h1 id=&#34;示例&#34;&gt;示例&lt;/h1&gt;&#xA;&lt;p&gt;假如我们有一个比较大的项目，我们将其分解成两个模块，一个是通用模块common,一个是业务模块service。在service模块中需要用到common模块中的方法&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    mkdir workspace&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cd workspace&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;创建common模块&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    mkdir common&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cd common&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    go mod init github.com/ethan/common&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    touch adder.go&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;adder.go中存在一个公共的add方法，可以提供给其他的模块调用&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// adder.go&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;common&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Adder&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;y&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;x&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;y&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;创建service模块&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cd ..&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    mkdir service&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cd service&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    go mod init github.com/ethan/service&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    touch service.go&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在service.go 文件中，我们需要用到common模块里的Adder方法&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// service.go&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;github.com/ethan/common&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;common&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Adder&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;))&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时我们的项目结构&#xA;&lt;img src=&#34;https://img.ethanleo.top/20230706203308.png&#34; alt=&#34;20230706203308&#34;&gt;&#xA;我们通过import导入了common包，这个时候我们需要通过&lt;code&gt;go mod tidy&lt;/code&gt;将我们需要导入的包进行同步,这时我们会遇到错误&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go之Unsafe包</title>
+      <link>http://localhost:1313/go%E4%B9%8Bunsafe%E5%8C%85/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/go%E4%B9%8Bunsafe%E5%8C%85/</guid>
+      <description>&lt;h1 id=&#34;go之unsafe包&#34;&gt;Go之Unsafe包&lt;/h1&gt;&#xA;&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;&#xA;&lt;p&gt;在Go中，我们常见的指针是类型安全的，但是存在很多的限制。比如:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Go的指针不能进行数学运算&lt;/li&gt;&#xA;&lt;li&gt;不同类型的指针不能进行相互转换&lt;/li&gt;&#xA;&lt;li&gt;不同类型的指针不能用 &lt;code&gt;==&lt;/code&gt;或者&lt;code&gt;!=&lt;/code&gt;比较&lt;/li&gt;&#xA;&lt;li&gt;不同类型的指针不能相互赋值&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;但是在Go中也存在非类型安全的指针，比如说unsafe.Pointer。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>go库之Cobra</title>
+      <link>http://localhost:1313/go%E5%BA%93%E4%B9%8Bcobra/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/go%E5%BA%93%E4%B9%8Bcobra/</guid>
+      <description>&lt;h1 id=&#34;go库之cobra&#34;&gt;go库之Cobra&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;Cobra是一个用来创建CLI应用程序的库，用于许多的Go项目，例如K8s、Hugo、和GitHub CLI等。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Go语言学习</title>
+      <link>http://localhost:1313/go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/</guid>
+      <description>&lt;p&gt;3 个环境变量，也就是 GOROOT、GOPATH 和 GOBIN。这里我可以简单介绍一下。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;GOROOT：Go 语言安装根目录的路径，也就是 GO 语言的安装路径。&lt;/li&gt;&#xA;&lt;li&gt;GOPATH：若干工作区目录的路径。是我们自己定义的工作空间。&lt;/li&gt;&#xA;&lt;li&gt;GOBIN：GO 程序生成的可执行文件（executable file）的路径。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;!-- raw HTML omitted --&gt;&#xA;&lt;h2 id=&#34;go-build-命令一些可选项的用途和用法&#34;&gt;go build 命令一些可选项的用途和用法&lt;/h2&gt;&#xA;&lt;p&gt;在运行&lt;code&gt;go build&lt;/code&gt;命令的时候，默认不会编译目标代码包所依赖的那些代码包。当然，如果被依赖的代码包的归档文件不存在，或者源码文件有了变化，那它还是会被编译。&lt;/p&gt;&#xA;&lt;p&gt;如果要强制编译它们，可以在执行命令的时候加入标记&lt;code&gt;-a&lt;/code&gt;。此时，不但目标代码包总是会被编译，它依赖的代码包也总会被编译，即使依赖的是标准库中的代码包也是如此。&lt;/p&gt;&#xA;&lt;p&gt;另外，如果不但要编译依赖的代码包，还要安装它们的归档文件，那么可以加入标记&lt;code&gt;-i&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;那么我们怎么确定哪些代码包被编译了呢？有两种方法。&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;运行&lt;code&gt;go build&lt;/code&gt;命令时加入标记&lt;code&gt;-x&lt;/code&gt;，这样可以看到&lt;code&gt;go build&lt;/code&gt;命令具体都执行了哪些操作。另外也可以加入标记&lt;code&gt;-n&lt;/code&gt;，这样可以只查看具体操作而不执行它们。&lt;/li&gt;&#xA;&lt;li&gt;运行&lt;code&gt;go build&lt;/code&gt;命令时加入标记&lt;code&gt;-v&lt;/code&gt;，这样可以看到&lt;code&gt;go build&lt;/code&gt;命令编译的代码包的名称。它在与&lt;code&gt;-a&lt;/code&gt;标记搭配使用时很有用。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;下面再说一说与 Go 源码的安装联系很紧密的一个命令：&lt;code&gt;go get&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;命令&lt;code&gt;go get&lt;/code&gt;会自动从一些主流公用代码仓库（比如 GitHub）下载目标代码包，并把它们安装到环境变量&lt;code&gt;GOPATH&lt;/code&gt;包含的第 1 工作区的相应目录中。如果存在环境变量&lt;code&gt;GOBIN&lt;/code&gt;，那么仅包含命令源码文件的代码包会被安装到&lt;code&gt;GOBIN&lt;/code&gt;指向的那个目录。&lt;/p&gt;&#xA;&lt;p&gt;最常用的几个标记有下面几种。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;-u&lt;/code&gt;：下载并安装代码包，不论工作区中是否已存在它们。&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-d&lt;/code&gt;：只下载代码包，不安装代码包。&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-fix&lt;/code&gt;：在下载代码包后先运行一个用于根据当前 Go 语言版本修正代码的工具，然后再安装代码包。&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-t&lt;/code&gt;：同时下载测试所需的代码包。&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;-insecure&lt;/code&gt;：允许通过非安全的网络协议下载和安装代码包。HTTP 就是这样的协议。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Go 语言官方提供的&lt;code&gt;go get&lt;/code&gt;命令是比较基础的，其中并没有提供依赖管理的功能。目前 GitHub 上有很多提供这类功能的第三方工具，比如&lt;code&gt;glide&lt;/code&gt;、&lt;code&gt;gb&lt;/code&gt;以及官方出品的&lt;code&gt;dep&lt;/code&gt;、&lt;code&gt;vgo&lt;/code&gt;等等，它们在内部大都会直接使用&lt;code&gt;go get&lt;/code&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GO调度器</title>
+      <link>http://localhost:1313/go%E8%B0%83%E5%BA%A6%E5%99%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/go%E8%B0%83%E5%BA%A6%E5%99%A8/</guid>
+      <description>&lt;h1 id=&#34;go调度器&#34;&gt;GO调度器&lt;/h1&gt;</description>
+    </item>
+    <item>
+      <title>Strings包之Trim方法</title>
+      <link>http://localhost:1313/strings%E5%8C%85%E4%B9%8Btrim/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/strings%E5%8C%85%E4%B9%8Btrim/</guid>
+      <description>&lt;h1 id=&#34;strings包之trim相关方法&#34;&gt;Strings包之Trim相关方法&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;Go 开发人员在使用 strings 包时常犯的一个错误是混合使用 TrimRight 和 TrimSuffix。这两个函数都有相似的用途，并且很容易混淆它们。让我们来进一步对这两个方法进行了解&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sync包之Sync.Cond</title>
+      <link>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.cond/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.cond/</guid>
+      <description>&lt;h1 id=&#34;sync包之synccond&#34;&gt;Sync包之Sync.Cond&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;简单来说，sync.Cond实现了一个广播和单个通知的功能，主要还是作用于有多个goroutine的情况下，通过一个变量来对两种不同类型的事件进行控制。但是在go语言中，我们更加推荐通过channel来进行多个协程的通信&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sync包之Sync.Map</title>
+      <link>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.map/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.map/</guid>
+      <description>&lt;h1 id=&#34;sync包之syncmap&#34;&gt;Sync包之Sync.Map&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;Sync包下的map很像是Go的map[interface{}]interface{}，但是对于普通的map来说，sync.Map可以保证在多个goroutine的并发使用是安全的，无需额外添加锁来进行控制&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sync包之Sync.Mutex</title>
+      <link>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.mutex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.mutex/</guid>
+      <description>&lt;h1 id=&#34;sync包之syncmutex&#34;&gt;Sync包之Sync.Mutex&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;简单来说Sync.Mutex就是一个互斥锁&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sync包之Sync.RWMutex</title>
+      <link>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.rwmutex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/sync%E5%8C%85%E4%B9%8Bsync.rwmutex/</guid>
+      <description>&lt;h1 id=&#34;sync包之syncrwmutex&#34;&gt;Sync包之Sync.RWMutex&lt;/h1&gt;&#xA;&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;RWMutex就是一个读写锁，可以被多个读者或单个写持有，假如有一个goroutine持有读锁，而另一个goroutine想进行Lock,那么调用Lock的goroutine会被一直阻塞，直到读锁被释放&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>并发编程之Channel(一)</title>
+      <link>http://localhost:1313/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8Bchannel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8Bchannel/</guid>
+      <description>&lt;h1 id=&#34;并发编程之channel一&#34;&gt;并发编程之Channel(一)&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;不要通过共享内存通信，要通过通信共享内存&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;&#xA;&lt;p&gt;channel(通道),golang并发编程中的一种重要的数据结构，用于多个goroutine之间进行通信。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>并发编程之Select(二)</title>
+      <link>http://localhost:1313/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8Bselect%E4%BA%8C/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B9%8Bselect%E4%BA%8C/</guid>
+      <description>&lt;h1 id=&#34;并发编程之select二&#34;&gt;并发编程之Select(二)&lt;/h1&gt;&#xA;&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;&#xA;&lt;p&gt;处理一个管道的数据我们可以通过&lt;code&gt;&amp;lt;-&lt;/code&gt;取值，或者通过&lt;code&gt;for...range&lt;/code&gt;来进行数据的获取，但是当我们需要同时多个管道数据的发送或者接收的操作的时候，我们可以通过&lt;code&gt;select&lt;/code&gt;关键字来进行操作。&lt;code&gt;select&lt;/code&gt;代码块和&lt;code&gt;switch&lt;/code&gt;有些相似，也包含了多个case分支，但是case的执行并不会按照顺序，当有一个case满足条件的时候，那么就会执行满足条件的case，如果case都不满足，那么就会执行default下的内容，倘若没有default，那么select就会阻塞，直到有case可以满足&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

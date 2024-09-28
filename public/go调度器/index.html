@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>GO调度器 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="GO调度器">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/go%E8%B0%83%E5%BA%A6%E5%99%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/go%E8%B0%83%E5%BA%A6%E5%99%A8/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      GO调度器
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="go调度器">GO调度器<a hidden class="anchor" aria-hidden="true" href="#go调度器">#</a></h1>
+<h2 id="schedt"><strong>schedt</strong><a hidden class="anchor" aria-hidden="true" href="#schedt">#</a></h2>
+<p>保存调度器自身的状态信息，另一方面它还拥有一个用来保存goroutine的运行队列。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">schedt</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// accessed atomically. keep at top to ensure alignment on 32-bit systems.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">goidgen</span>   <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">lastpoll</span>  <span style="color:#66d9ef">uint64</span> <span style="color:#75715e">// time of last network poll, 0 if currently polling
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">pollUntil</span> <span style="color:#66d9ef">uint64</span> <span style="color:#75715e">// time to which current poll is sleeping
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">lock</span> <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// When increasing nmidle, nmidlelocked, nmsys, or nmfreed, be
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// sure to call checkdead().
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	 <span style="color:#75715e">// 由空闲的工作线程组成链表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">midle</span>        <span style="color:#a6e22e">muintptr</span> <span style="color:#75715e">// idle m&#39;s waiting for work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 空闲的工作线程的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nmidle</span>       <span style="color:#66d9ef">int32</span>    <span style="color:#75715e">// number of idle m&#39;s waiting for work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nmidlelocked</span> <span style="color:#66d9ef">int32</span>    <span style="color:#75715e">// number of locked m&#39;s waiting for work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">mnext</span>        <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// number of m&#39;s that have been created and next M ID
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 最多只能创建maxmcount个工作线程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">maxmcount</span>    <span style="color:#66d9ef">int32</span>    <span style="color:#75715e">// maximum number of m&#39;s allowed (or die)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nmsys</span>        <span style="color:#66d9ef">int32</span>    <span style="color:#75715e">// number of system m&#39;s not counted for deadlock
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nmfreed</span>      <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// cumulative number of freed m&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ngsys</span> <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// number of system goroutines; updated atomically
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 由空闲的p结构体对象组成的链表 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">pidle</span>      <span style="color:#a6e22e">puintptr</span> <span style="color:#75715e">// idle p&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//  空闲的p结构体对象的数量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">npidle</span>     <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">nmspinning</span> <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// See &#34;Worker thread parking/unparking&#34; comment in proc.go.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Global runnable queue. goroutine全局运行队列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runq</span>     <span style="color:#a6e22e">gQueue</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">runqsize</span> <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// disable controls selective disabling of the scheduler.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Use schedEnableUser to control this.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// disable is protected by sched.lock.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">disable</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// user disables scheduling of user goroutines.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">user</span>     <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">runnable</span> <span style="color:#a6e22e">gQueue</span> <span style="color:#75715e">// pending runnable Gs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">n</span>        <span style="color:#66d9ef">int32</span>  <span style="color:#75715e">// length of runnable
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Global cache of dead G&#39;s.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// gFree是所有已经退出的goroutine对应的g结构体对象组成的链表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 用于缓存g结构体对象，避免每次创建goroutine时都重新分配内存
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gFree</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">lock</span>    <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">stack</span>   <span style="color:#a6e22e">gList</span> <span style="color:#75715e">// Gs with stacks
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">noStack</span> <span style="color:#a6e22e">gList</span> <span style="color:#75715e">// Gs without stacks
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">n</span>       <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Central cache of sudog structs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sudoglock</span>  <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sudogcache</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sudog</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Central pool of available defer structs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">deferlock</span> <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">deferpool</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">_defer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// freem is the list of m&#39;s waiting to be freed when their
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// m.exited is set. Linked through m.freelink.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">freem</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">m</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">gcwaiting</span>  <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// gc is waiting to run
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">stopwait</span>   <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">stopnote</span>   <span style="color:#a6e22e">note</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sysmonwait</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sysmonnote</span> <span style="color:#a6e22e">note</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// safepointFn should be called on each P at the next GC
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// safepoint if p.runSafePointFn is set.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">safePointFn</span>   <span style="color:#66d9ef">func</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">p</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">safePointWait</span> <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">safePointNote</span> <span style="color:#a6e22e">note</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">profilehz</span> <span style="color:#66d9ef">int32</span> <span style="color:#75715e">// cpu profiling rate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">procresizetime</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// nanotime() of last change to gomaxprocs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">totaltime</span>      <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// ∫gomaxprocs dt up to procresizetime
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// sysmonlock protects sysmon&#39;s actions on the runtime.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Acquire and hold this mutex to block sysmon from interacting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// with the rest of the runtime.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sysmonlock</span> <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// timeToRun is a distribution of scheduling latencies, defined
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// as the sum of time a G spends in the _Grunnable state before
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// it transitions to _Grunning.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// timeToRun is protected by sched.lock.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timeToRun</span> <span style="color:#a6e22e">timeHistogram</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="gobuf">gobuf<a hidden class="anchor" aria-hidden="true" href="#gobuf">#</a></h2>
+<p>gobuf结构体用于保存goroutine的调度信息，主要包括CPU的几个寄存器的值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">gobuf</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// The offsets of sp, pc, and g are known to (hard-coded in) libmach.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// ctxt is unusual with respect to GC: it may be a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// heap-allocated funcval, so GC needs to track it, but it
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// needs to be set and cleared from assembly, where it&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// difficult to have write barriers. However, ctxt is really a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// saved, live register, and we only ever exchange it between
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// the real register and the gobuf. Hence, we treat it as a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// root during stack scanning, which means assembly that saves
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// and restores it doesn&#39;t need write barriers. It&#39;s still
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// typed as a pointer so that any other writes from Go get
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// write barriers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sp</span>   <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// CPU的rsp寄存器的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">pc</span>   <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// CPU的rip寄存器的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">g</span>    <span style="color:#a6e22e">guintptr</span> <span style="color:#75715e">// 当前这个gobuf属于那个goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">ctxt</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ret</span>  <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// 保存系统调用的返回值，因为从系统调用返回之后如果p被其它工作线程抢占，则这个goroutine会被放入全局运行队列被其它工作线程调度，其它线程需要知道系统调用的返回值。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">lr</span>   <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">bp</span>   <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// for framepointer-enabled architectures 保存CPU的rip寄存器的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="p">P<a hidden class="anchor" aria-hidden="true" href="#p">#</a></h2>
+<p>局部运行队列被包含在<strong>p结构体</strong>的实例对象之中，每一个运行着go代码的工作线程都会与一个p结构体的实例对象关联在一起</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">p</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">id</span>          <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">status</span>      <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// one of pidle/prunning/...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">link</span>        <span style="color:#a6e22e">puintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">schedtick</span>   <span style="color:#66d9ef">uint32</span>     <span style="color:#75715e">// incremented on every scheduler call
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">syscalltick</span> <span style="color:#66d9ef">uint32</span>     <span style="color:#75715e">// incremented on every system call
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sysmontick</span>  <span style="color:#a6e22e">sysmontick</span> <span style="color:#75715e">// last tick observed by sysmon
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">m</span>           <span style="color:#a6e22e">muintptr</span>   <span style="color:#75715e">// back-link to associated m (nil if idle)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">mcache</span>      <span style="color:#f92672">*</span><span style="color:#a6e22e">mcache</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">pcache</span>      <span style="color:#a6e22e">pageCache</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">raceprocctx</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">deferpool</span>    []<span style="color:#f92672">*</span><span style="color:#a6e22e">_defer</span> <span style="color:#75715e">// pool of available defer structs (see panic.go)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">deferpoolbuf</span> [<span style="color:#ae81ff">32</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">_defer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Cache of goroutine ids, amortizes accesses to runtime·sched.goidgen.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">goidcache</span>    <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">goidcacheend</span> <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Queue of runnable goroutines. Accessed without lock.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//本地goroutine运行队列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runqhead</span> <span style="color:#66d9ef">uint32</span>  <span style="color:#75715e">// 队列头
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runqtail</span> <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// 队列尾
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runq</span>     [<span style="color:#ae81ff">256</span>]<span style="color:#a6e22e">guintptr</span> <span style="color:#75715e">//使用数组实现的循环队列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// runnext, if non-nil, is a runnable G that was ready&#39;d by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// the current G and should be run next instead of what&#39;s in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// runq if there&#39;s time remaining in the running G&#39;s time
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// slice. It will inherit the time left in the current time
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// slice. If a set of goroutines is locked in a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// communicate-and-wait pattern, this schedules that set as a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// unit and eliminates the (potentially large) scheduling
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// latency that otherwise arises from adding the ready&#39;d
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// goroutines to the end of the run queue.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Note that while other P&#39;s may atomically CAS this to zero,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// only the owner P can CAS it to a valid G.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runnext</span> <span style="color:#a6e22e">guintptr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Available G&#39;s (status == Gdead)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gFree</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">gList</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sudogcache</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">sudog</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sudogbuf</span>   [<span style="color:#ae81ff">128</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">sudog</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Cache of mspan objects from the heap.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">mspancache</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// We need an explicit length here because this field is used
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// in allocation codepaths where write barriers are not allowed,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// and eliminating the write barrier/keeping it eliminated from
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// slice updates is tricky, moreso than just managing the length
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// ourselves.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">len</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">buf</span> [<span style="color:#ae81ff">128</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">mspan</span>
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">tracebuf</span> <span style="color:#a6e22e">traceBufPtr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// traceSweep indicates the sweep events should be traced.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// This is used to defer the sweep start event until a span
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// has actually been swept.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">traceSweep</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// traceSwept and traceReclaimed track the number of bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// swept and reclaimed by sweeping in the current sweep loop.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">traceSwept</span>, <span style="color:#a6e22e">traceReclaimed</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">palloc</span> <span style="color:#a6e22e">persistentAlloc</span> <span style="color:#75715e">// per-P to avoid mutex
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">_</span> <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// Alignment for atomic fields below
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// The when field of the first entry on the timer heap.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// This is updated using atomic functions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// This is 0 if the timer heap is empty.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timer0When</span> <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// The earliest known nextwhen field of a timer with
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// timerModifiedEarlier status. Because the timer may have been
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// modified again, there need not be any timer with this value.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// This is updated using atomic functions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// This is 0 if there are no timerModifiedEarlier timers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timerModifiedEarliest</span> <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Per-P GC state
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcAssistTime</span>         <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// Nanoseconds in assistAlloc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcFractionalMarkTime</span> <span style="color:#66d9ef">int64</span> <span style="color:#75715e">// Nanoseconds in fractional mark worker (atomic)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// gcMarkWorkerMode is the mode for the next mark worker to run in.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// That is, this is used to communicate with the worker goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// selected for immediate execution by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// gcController.findRunnableGCWorker. When scheduling other goroutines,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// this field must be set to gcMarkWorkerNotWorker.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcMarkWorkerMode</span> <span style="color:#a6e22e">gcMarkWorkerMode</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// gcMarkWorkerStartTime is the nanotime() at which the most recent
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// mark worker started.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcMarkWorkerStartTime</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// gcw is this P&#39;s GC work buffer cache. The work buffer is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// filled by write barriers, drained by mutator assists, and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// disposed on certain GC state transitions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcw</span> <span style="color:#a6e22e">gcWork</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// wbBuf is this P&#39;s GC write barrier buffer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// TODO: Consider caching this in the running G.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">wbBuf</span> <span style="color:#a6e22e">wbBuf</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">runSafePointFn</span> <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// if 1, run sched.safePointFn at next safe point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// statsSeq is a counter indicating whether this P is currently
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// writing any stats. Its value is even when not, odd when it is.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">statsSeq</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Lock for timers. We normally access the timers while running
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// on this P, but the scheduler can also do it from a different P.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timersLock</span> <span style="color:#a6e22e">mutex</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Actions to take at some time. This is used to implement the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// standard library&#39;s time package.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Must hold timersLock to access.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timers</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Number of timers in P&#39;s heap.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Modified using atomic instructions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">numTimers</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Number of timerDeleted timers in P&#39;s heap.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Modified using atomic instructions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">deletedTimers</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Race context used while executing timer functions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timerRaceCtx</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// scannableStackSizeDelta accumulates the amount of stack space held by
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// live goroutines (i.e. those eligible for stack scanning).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Flushed to gcController.scannableStackSize once scannableStackSizeSlack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// or -scannableStackSizeSlack is reached.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">scannableStackSizeDelta</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// preempt is set to indicate that this P should be enter the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// scheduler ASAP (regardless of what G is running on it).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">preempt</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Padding is no longer needed. False sharing is now not a worry because p is large enough
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// that its size class is an integer multiple of the cache line size (for any of our architectures).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="g">G<a hidden class="anchor" aria-hidden="true" href="#g">#</a></h2>
+<p>为了实现对goroutine的调度，需要引入一个数据结构来保存CPU寄存器的值以及goroutine的其它一些状态信息，在Go语言调度器源代码中，这个数据结构是一个名叫<strong>g的结构体</strong>，它保存了goroutine的所有信息，该结构体的每一个实例对象都代表了一个goroutine，调度器代码可以通过g对象来对goroutine进行调度，当goroutine被调离CPU时，调度器代码负责把CPU寄存器的值保存在g对象的成员变量之中，当goroutine被调度起来运行时，调度器代码又负责把g对象的成员变量所保存的寄存器的值恢复到CPU的寄存器</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">g</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Stack parameters.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// stack describes the actual stack memory: [stack.lo, stack.hi).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// stackguard0 is the stack pointer compared in the Go stack growth prologue.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// It is stack.lo+StackGuard normally, but can be StackPreempt to trigger a preemption.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// stackguard1 is the stack pointer compared in the C stack growth prologue.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// It is stack.lo+StackGuard on g0 and gsignal stacks.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// It is ~0 on other goroutine stacks, to trigger a call to morestackc (and crash).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">stack</span>       <span style="color:#a6e22e">stack</span>   <span style="color:#75715e">// offset known to runtime/cgo 记录该G使用的栈
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 下两个成员用于检查栈溢出，实现栈自动伸缩，抢占调度也会用到stackguard0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">stackguard0</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// offset known to liblink
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">stackguard1</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// offset known to liblink
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">_panic</span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">_panic</span> <span style="color:#75715e">// innermost panic - offset known to liblink
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">_defer</span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">_defer</span> <span style="color:#75715e">// innermost defer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">m</span>         <span style="color:#f92672">*</span><span style="color:#a6e22e">m</span>      <span style="color:#75715e">// current m; offset known to arm liblink 用来确定该当前的g正在被那个工作线程执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sched</span>     <span style="color:#a6e22e">gobuf</span> <span style="color:#75715e">// goroutine 相关的栈信息  调度信息 主要是几个寄存器的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">syscallsp</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// if status==Gsyscall, syscallsp = sched.sp to use during gc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">syscallpc</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// if status==Gsyscall, syscallpc = sched.pc to use during gc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">stktopsp</span>  <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// expected sp at top of stack, to check in traceback
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// param is a generic pointer parameter field used to pass
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// values in particular contexts where other storage for the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// parameter would be difficult to find. It is currently used
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// in three ways:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 1. When a channel operation wakes up a blocked goroutine, it sets param to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//    point to the sudog of the completed blocking operation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 2. By gcAssistAlloc1 to signal back to its caller that the goroutine completed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//    the GC cycle. It is unsafe to do so in any other way, because the goroutine&#39;s
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//    stack may have moved in the meantime.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 3. By debugCallWrap to pass parameters to a new goroutine because allocating a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">//    closure in the runtime is forbidden.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">param</span>        <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">atomicstatus</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">stackLock</span>    <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// sigprof/scang lock; TODO: fold in to atomicstatus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">goid</span>         <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">schedlink</span>    <span style="color:#a6e22e">guintptr</span> <span style="color:#75715e">// schedlink字段指向全局运行队列中的下一个g，所有位于全局运行队列中的g形成一个链表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">waitsince</span>    <span style="color:#66d9ef">int64</span>      <span style="color:#75715e">// approx time when the g become blocked
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">waitreason</span>   <span style="color:#a6e22e">waitReason</span> <span style="color:#75715e">// if status==Gwaiting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">preempt</span>       <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// preemption signal, duplicates stackguard0 = stackpreempt 抢占调度标志，如果需要抢占调度，设置		preempt为true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">preemptStop</span>   <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// transition to _Gpreempted on preemption; otherwise, just deschedule
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">preemptShrink</span> <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// shrink stack at synchronous safe point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// asyncSafePoint is set if g is stopped at an asynchronous
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// safe point. This means there are frames on the stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// without precise pointer information.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">asyncSafePoint</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">paniconfault</span> <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// panic (instead of crash) on unexpected fault address
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcscandone</span>   <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// g has scanned stack; protected by _Gscan bit in status
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">throwsplit</span>   <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// must not split stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// activeStackChans indicates that there are unlocked channels
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// pointing into this goroutine&#39;s stack. If true, stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// copying needs to acquire channel locks to protect these
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// areas of the stack.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">activeStackChans</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// parkingOnChan indicates that the goroutine is about to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// park on a chansend or chanrecv. Used to signal an unsafe point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// for stack shrinking. It&#39;s a boolean value, but is updated atomically.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">parkingOnChan</span> <span style="color:#66d9ef">uint8</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">raceignore</span>     <span style="color:#66d9ef">int8</span>     <span style="color:#75715e">// ignore race detection events
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sysblocktraced</span> <span style="color:#66d9ef">bool</span>     <span style="color:#75715e">// StartTrace has emitted EvGoInSyscall about this goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">tracking</span>       <span style="color:#66d9ef">bool</span>     <span style="color:#75715e">// whether we&#39;re tracking this G for sched latency statistics
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">trackingSeq</span>    <span style="color:#66d9ef">uint8</span>    <span style="color:#75715e">// used to decide whether to track this G
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runnableStamp</span>  <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// timestamp of when the G last became runnable, only used when tracking
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">runnableTime</span>   <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// the amount of time spent runnable, cleared when running, only used when tracking
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sysexitticks</span>   <span style="color:#66d9ef">int64</span>    <span style="color:#75715e">// cputicks when syscall has returned (for tracing)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">traceseq</span>       <span style="color:#66d9ef">uint64</span>   <span style="color:#75715e">// trace event sequencer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">tracelastp</span>     <span style="color:#a6e22e">puintptr</span> <span style="color:#75715e">// last P emitted an event for this goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">lockedm</span>        <span style="color:#a6e22e">muintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sig</span>            <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">writebuf</span>       []<span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sigcode0</span>       <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sigcode1</span>       <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">sigpc</span>          <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">gopc</span>           <span style="color:#66d9ef">uintptr</span>         <span style="color:#75715e">// pc of go statement that created this goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">ancestors</span>      <span style="color:#f92672">*</span>[]<span style="color:#a6e22e">ancestorInfo</span> <span style="color:#75715e">// ancestor information goroutine(s) that created this goroutine (only used if debug.tracebackancestors)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">startpc</span>        <span style="color:#66d9ef">uintptr</span>         <span style="color:#75715e">// pc of goroutine function
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">racectx</span>        <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">waiting</span>        <span style="color:#f92672">*</span><span style="color:#a6e22e">sudog</span>         <span style="color:#75715e">// sudog structures this g is waiting on (that have a valid elem ptr); in lock order
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">cgoCtxt</span>        []<span style="color:#66d9ef">uintptr</span>      <span style="color:#75715e">// cgo traceback context
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">labels</span>         <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span> <span style="color:#75715e">// profiler labels
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">timer</span>          <span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>         <span style="color:#75715e">// cached timer for time.Sleep
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">selectDone</span>     <span style="color:#66d9ef">uint32</span>         <span style="color:#75715e">// are we participating in a select and did someone win the race?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Per-G GC state
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// gcAssistBytes is this G&#39;s GC assist credit in terms of
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// bytes allocated. If this is positive, then the G has credit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// to allocate gcAssistBytes bytes without assisting. If this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// is negative, then the G must correct this by performing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// scan work. We track this in bytes to make it fast to update
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// and check for debt in the malloc hot path. The assist ratio
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// determines how this corresponds to scan work debt.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gcAssistBytes</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="m">M<a hidden class="anchor" aria-hidden="true" href="#m">#</a></h2>
+<p>Go调度器源代码中还有一个用来代表工作线程的<strong>m结构体</strong>，每个工作线程都有唯一的一个m结构体的实例对象与之对应，m结构体对象除了记录着工作线程的诸如栈的起止位置、当前正在执行的goroutine以及是否空闲等等状态信息之外，还通过指针维持着与p结构体的实例对象之间的绑定关系</p>
+<p>M存放在工作线程自身的本地存储中，算作工作线程的一个本地线程稀有的全局变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">m</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// g0主要用来记录工作线程使用的栈信息，在执行调度代码时需要使用这个栈 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 执行用户goroutine代码时，使用用户goroutine自己的栈，调度时会发生栈的切换
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">g0</span>      <span style="color:#f92672">*</span><span style="color:#a6e22e">g</span>     <span style="color:#75715e">// goroutine with scheduling stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">morebuf</span> <span style="color:#a6e22e">gobuf</span>  <span style="color:#75715e">// gobuf arg to morestack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">divmod</span>  <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// div/mod denominator for arm - known to liblink
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">_</span>       <span style="color:#66d9ef">uint32</span> <span style="color:#75715e">// align next field to 8 bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Fields not known to debuggers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">procid</span>        <span style="color:#66d9ef">uint64</span>            <span style="color:#75715e">// for debuggers, but offset not hard-coded
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">gsignal</span>       <span style="color:#f92672">*</span><span style="color:#a6e22e">g</span>                <span style="color:#75715e">// signal-handling g
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">goSigStack</span>    <span style="color:#a6e22e">gsignalStack</span>      <span style="color:#75715e">// Go-allocated signal handling stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">sigmask</span>       <span style="color:#a6e22e">sigset</span>            <span style="color:#75715e">// storage for saved signal mask
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 通过TLS实现m结构体对象与工作线程之间的绑定 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">tls</span>           [<span style="color:#a6e22e">tlsSlots</span>]<span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// thread-local storage (for x86 extern register)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">mstartfn</span>      <span style="color:#66d9ef">func</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">//  指向工作线程正在运行的goroutine的g结构体对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">curg</span>          <span style="color:#f92672">*</span><span style="color:#a6e22e">g</span>       <span style="color:#75715e">// current running goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">caughtsig</span>     <span style="color:#a6e22e">guintptr</span> <span style="color:#75715e">// goroutine running during fatal signal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 记录与当前工作线程绑定的p结构体对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">p</span>             <span style="color:#a6e22e">puintptr</span> <span style="color:#75715e">// attached p for executing go code (nil if not executing go code)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nextp</span>         <span style="color:#a6e22e">puintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">oldp</span>          <span style="color:#a6e22e">puintptr</span> <span style="color:#75715e">// the p that was attached before executing a syscall
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">id</span>            <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">mallocing</span>     <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">throwing</span>      <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">preemptoff</span>    <span style="color:#66d9ef">string</span> <span style="color:#75715e">// if != &#34;&#34;, keep curg running on this m
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">locks</span>         <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">dying</span>         <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">profilehz</span>     <span style="color:#66d9ef">int32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// spinning状态：表示当前工作线程正在试图从其它工作线程的本地运行队列偷取goroutine
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">spinning</span>      <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// m is out of work and is actively looking for work
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">blocked</span>       <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// m is blocked on a note
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">newSigstack</span>   <span style="color:#66d9ef">bool</span> <span style="color:#75715e">// minit on C thread called sigaltstack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">printlock</span>     <span style="color:#66d9ef">int8</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">incgo</span>         <span style="color:#66d9ef">bool</span>   <span style="color:#75715e">// m is executing a cgo call
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">freeWait</span>      <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">Uint32</span> <span style="color:#75715e">// Whether it is safe to free g0 and delete m (one of freeMRef, freeMStack, freeMWait)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">fastrand</span>      <span style="color:#66d9ef">uint64</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">needextram</span>    <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">traceback</span>     <span style="color:#66d9ef">uint8</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ncgocall</span>      <span style="color:#66d9ef">uint64</span>      <span style="color:#75715e">// number of cgo calls in total
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">ncgo</span>          <span style="color:#66d9ef">int32</span>       <span style="color:#75715e">// number of cgo calls currently in progress
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">cgoCallersUse</span> <span style="color:#66d9ef">uint32</span>      <span style="color:#75715e">// if non-zero, cgoCallers in use temporarily
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">cgoCallers</span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">cgoCallers</span> <span style="color:#75715e">// cgo traceback if crashing in cgo call
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 没有goroutine需要运行时，工作线程睡眠在这个park成员上，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 其它线程通过这个park唤醒该工作线程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">park</span>          <span style="color:#a6e22e">note</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// 记录所有工作线程的一个链表
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">alllink</span>       <span style="color:#f92672">*</span><span style="color:#a6e22e">m</span> <span style="color:#75715e">// on allm
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">schedlink</span>     <span style="color:#a6e22e">muintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">lockedg</span>       <span style="color:#a6e22e">guintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">createstack</span>   [<span style="color:#ae81ff">32</span>]<span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// stack that created this thread.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">lockedExt</span>     <span style="color:#66d9ef">uint32</span>      <span style="color:#75715e">// tracking for external LockOSThread
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">lockedInt</span>     <span style="color:#66d9ef">uint32</span>      <span style="color:#75715e">// tracking for internal lockOSThread
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">nextwaitm</span>     <span style="color:#a6e22e">muintptr</span>    <span style="color:#75715e">// next m waiting for lock
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">waitunlockf</span>   <span style="color:#66d9ef">func</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">g</span>, <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>) <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">waitlock</span>      <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">waittraceev</span>   <span style="color:#66d9ef">byte</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">waittraceskip</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">startingtrace</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">syscalltick</span>   <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">freelink</span>      <span style="color:#f92672">*</span><span style="color:#a6e22e">m</span> <span style="color:#75715e">// on sched.freem
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// these are here because they are too large to be on the stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// of low-level NOSPLIT functions.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">libcall</span>   <span style="color:#a6e22e">libcall</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">libcallpc</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// for cpu profiler
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">libcallsp</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">libcallg</span>  <span style="color:#a6e22e">guintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">syscall</span>   <span style="color:#a6e22e">libcall</span> <span style="color:#75715e">// stores syscall parameters on windows
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">vdsoSP</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// SP for traceback while in VDSO call (0 if not in call)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">vdsoPC</span> <span style="color:#66d9ef">uintptr</span> <span style="color:#75715e">// PC for traceback while in VDSO call
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// preemptGen counts the number of completed preemption
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// signals. This is used to detect when a preemption is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// requested, but fails. Accessed atomically.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">preemptGen</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Whether this is a pending preemption signal on this M.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// Accessed atomically.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">signalPending</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">dlogPerM</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">mOS</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Up to 10 locks held by this m, maintained by the lock ranking code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">locksHeldLen</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">locksHeld</span>    [<span style="color:#ae81ff">10</span>]<span style="color:#a6e22e">heldLockInfo</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="stack">stack<a hidden class="anchor" aria-hidden="true" href="#stack">#</a></h2>
+<p>stack结构体主要用来记录goroutine所使用的栈的信息，包括栈顶和栈底位置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// runtime/runtime2.go
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">stack</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">lo</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">hi</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="重要的全局变量">重要的全局变量<a hidden class="anchor" aria-hidden="true" href="#重要的全局变量">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">allm</span>       <span style="color:#f92672">*</span><span style="color:#a6e22e">m</span>  <span style="color:#75715e">// 所有的m构成的一个链表，包括下面的m0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">gomaxprocs</span> <span style="color:#66d9ef">int32</span>  <span style="color:#75715e">// p的最大值，默认等于ncpu，但可以通过GOMAXPROCS修改
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">ncpu</span>       <span style="color:#66d9ef">int32</span> <span style="color:#75715e">// 系统中cpu核的数量，程序启动时由runtime代码初始化 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">sched</span>      <span style="color:#a6e22e">schedt</span>  <span style="color:#75715e">// 调度器结构体对象，记录了调度器的工作状态
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">allp</span>       []<span style="color:#f92672">*</span><span style="color:#a6e22e">p</span> <span style="color:#75715e">// 保存所有的p，len(allp) == gomaxprocs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">allgs</span>      []<span style="color:#f92672">*</span><span style="color:#a6e22e">g</span> <span style="color:#75715e">// 保存所有的g
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">m0</span>           <span style="color:#a6e22e">m</span>  <span style="color:#75715e">// 代表进程的主线程
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">g0</span>           <span style="color:#a6e22e">g</span>  <span style="color:#75715e">// m0的g0，也就是m0.g0 = &amp;g0
+</span></span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

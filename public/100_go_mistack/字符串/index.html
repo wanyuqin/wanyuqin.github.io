@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="字符串
+​	在Go中，字符串是一种不可变的数据结构，包含一下内容：
+
+字符串指向不可变的byte数组
+byte数组总长度
+
+type StringHeader struct {
+  Data uintptr
+  Len int
+}
+​	我们将在本章节中看到Go有一种非常独特的方式来处理字符串。Go中映入了一种叫做runes的概念，这个概念对于理解字符串时必不可少的，对于新手来说可能会感到困惑。一旦我们知道了字符串时如何管理的，我们就可以在迭代字符串时避免常见的错误。我们还将研究Go开发人员在使用或生成字符串时常犯的错误。此外，我们会看到有时候我们可以直接使用[]byte，避免额外的分配。最后，我们将讨论如何避免可能导致子字符串泄漏的常见错误。本章主要目标是通过展示常见的字符串错误来帮助你理解字符串在Go中的工作原理
+不理解rune的概念
+​	如果不讨论Go中rune的概念，我们就无法开始字符串这一章。正如你将在一下部分中看到的那样，这个概念时彻底理解字符串处理方式和避免常见错误的关键。但在深入研究Go的	rune之前，我们确保我们对一些基本的编程概念保持一致。
+​	我们应该理解字符集和编码之间的区别：
+
+字符集是一组字符，例如，Unicode字符集包含2^21个字符
+编码是字符列表的二进制转换。例如，UTF-8是一种编码标准，能够将所有Unicode字符编码为可变字节数（从1到4字节）
+
+​	我们提到字符是为了简化字符集定义。但在Unicode中，我们使用代码点的概念来代指由单个值表示的项目。例如，中文字符汉由U&#43;6C49代码点表示。使用UTF-8,汉使用三个字节编码：0xE6、0xB1和0x89。为什么这个很重要？因为在Go中，rune是一个Unicode代码点。
+​	同时，我们提到 UTF-8 将字符编码为 1 到 4 个字节，因此最多为 32 位。 这就是为什么在 Go 中，rune是 int32 的别名
+type rune = int32
+​	关于 UTF-8 需要强调的另一件事：有些人认为 Go 字符串始终是 UTF-8，但事实并非如此。 让我们考虑以下示例:
+s:=&#34;hello&#34;
+​	我们将字符串文字（字符串常量）分配给 s。 在 Go 中，源代码以 UTF-8 编码。 因此，所有字符串文字都使用 UTF-8 编码为字节序列。 然而，字符串是任意字节的序列； 它不一定基于 UTF-8。 因此，当我们操作一个不是从字符串文字初始化的变量时（例如，从文件系统读取），我们不一定会假设它使用 UTF-8 编码.
+​	让我们回到 hello 的例子。 我们有一个由五个字符组成的字符串：h、e、l、l 和 o">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/100_go_mistack/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/100_go_mistack/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="字符串">字符串<a hidden class="anchor" aria-hidden="true" href="#字符串">#</a></h1>
+<p>​	在Go中，字符串是一种不可变的数据结构，包含一下内容：</p>
+<ul>
+<li>字符串指向不可变的byte数组</li>
+<li>byte数组总长度</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">StringHeader</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Data</span> <span style="color:#66d9ef">uintptr</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Len</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>​	我们将在本章节中看到Go有一种非常独特的方式来处理字符串。Go中映入了一种叫做<code>runes</code>的概念，这个概念对于理解字符串时必不可少的，对于新手来说可能会感到困惑。一旦我们知道了字符串时如何管理的，我们就可以在迭代字符串时避免常见的错误。我们还将研究Go开发人员在使用或生成字符串时常犯的错误。此外，我们会看到有时候我们可以直接使用<code>[]byte</code>，避免额外的分配。最后，我们将讨论如何避免可能导致子字符串泄漏的常见错误。本章主要目标是通过展示常见的字符串错误来帮助你理解字符串在Go中的工作原理</p>
+<h2 id="不理解rune的概念">不理解rune的概念<a hidden class="anchor" aria-hidden="true" href="#不理解rune的概念">#</a></h2>
+<p>​	如果不讨论Go中rune的概念，我们就无法开始字符串这一章。正如你将在一下部分中看到的那样，这个概念时彻底理解字符串处理方式和避免常见错误的关键。但在深入研究Go的	<code>rune</code>之前，我们确保我们对一些基本的编程概念保持一致。</p>
+<p>​	我们应该理解字符集和编码之间的区别：</p>
+<ul>
+<li>字符集是一组字符，例如，Unicode字符集包含2^21个字符</li>
+<li>编码是字符列表的二进制转换。例如，UTF-8是一种编码标准，能够将所有Unicode字符编码为可变字节数（从1到4字节）</li>
+</ul>
+<p>​	我们提到字符是为了简化字符集定义。但在Unicode中，我们使用代码点的概念来代指由单个值表示的项目。例如，中文字符<code>汉</code>由U+6C49代码点表示。使用UTF-8,<code>汉</code>使用三个字节编码：0xE6、0xB1和0x89。为什么这个很重要？因为在Go中，<code>rune</code>是一个Unicode代码点。</p>
+<p>​	同时，我们提到 UTF-8 将字符编码为 1 到 4 个字节，因此最多为 32 位。 这就是为什么在 Go 中，<code>rune</code>是 int32 的别名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#66d9ef">rune</span> = <span style="color:#66d9ef">int32</span>
+</span></span></code></pre></div><p>​	关于 UTF-8 需要强调的另一件事：有些人认为 Go 字符串始终是 UTF-8，但事实并非如此。 让我们考虑以下示例:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span><span style="color:#f92672">:=</span><span style="color:#e6db74">&#34;hello&#34;</span>
+</span></span></code></pre></div><p>​	我们将字符串文字（字符串常量）分配给 s。 在 Go 中，源代码以 UTF-8 编码。 因此，所有字符串文字都使用 UTF-8 编码为字节序列。 然而，字符串是任意字节的序列； 它不一定基于 UTF-8。 因此，当我们操作一个不是从字符串文字初始化的变量时（例如，从文件系统读取），我们不一定会假设它使用 UTF-8 编码.</p>
+<p>​	让我们回到 hello 的例子。 我们有一个由五个字符组成的字符串：h、e、l、l 和 o</p>
+<p>​	这些简单的字符每个都使用一个字节进行编码。 这就是为什么得到s 的长度返回 5</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span><span style="color:#f92672">:=</span><span style="color:#e6db74">&#34;hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">s</span>)) <span style="color:#75715e">//5
+</span></span></span></code></pre></div><p>​	但是字符并不总是编码为单个字节。 回到<code>汉</code>字符，我们提到过使用 UTF-8，这个字符被编码成三个字节。 我们可以通过以下示例验证这一点</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span><span style="color:#f92672">:=</span><span style="color:#e6db74">&#34;汉&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">s</span>))
+</span></span></code></pre></div><p>​	这个例子没有打印 1，而是打印 3。实际上，应用于字符串的 len 内置函数不返回字符数； 它返回字节数。</p>
+<p>​	相反，我们可以从字节列表创建一个字符串。 我们提到汉字符是使用三个字节 0xE6、0xB1 和 0x89 编码的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> string([]<span style="color:#66d9ef">byte</span>{<span style="color:#ae81ff">0xE6</span>, <span style="color:#ae81ff">0xB1</span>, <span style="color:#ae81ff">0x89</span>})
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s\n&#34;</span>, <span style="color:#a6e22e">s</span>) <span style="color:#75715e">// 汉
+</span></span></span></code></pre></div><p>​	在这里，我们构建了一个由这三个字节组成的字符串。 当我们打印字符串时，代码打印的不是三个字符，而是一个：汉</p>
+<p>​	总之：</p>
+<ul>
+<li>字符集是一组字符，而编码描述了如何将字符集转换为二进制</li>
+<li>在 Go 中，字符串引用任意字节的不可变切片</li>
+<li>Go 源代码使用 UTF-8 编码。 因此，所有字符串文字都是 UTF-8 字符串。 但是因为一个字符串可以包含任意字节，如果它是从其他地方（而不是源代码）获得的，则不能保证它是基于UTF-8 编码</li>
+<li><code>rune</code>对应Unicode代码点的概念，意思是用单个值表示字节</li>
+<li>使用 UTF-8，可以将 Unicode 代码点编码为 1 到 4 个字节</li>
+<li>在 Go 中对字符串使用 len 返回字节数，而不是<code>rune</code>数</li>
+</ul>
+<p>​	记住这些概念是必不可少的，因为<code>rune</code>在go中无处不在。 让我们看看这个知识的具体应用，涉及与字符串迭代相关的常见错误</p>
+<h2 id="不准确的字符串迭代">不准确的字符串迭代<a hidden class="anchor" aria-hidden="true" href="#不准确的字符串迭代">#</a></h2>
+<p>​	迭代字符串是开发人员的常见操作。 也许我们想对字符串中的每个符文执行一个操作，或者实现一个自定义函数来搜索特定的子字符串。 在这两种情况下，我们都必须迭代字符串的不同runes。 但是很容易对迭代的工作方式感到困惑。</p>
+<p>​	让我们看一个具体的例子。 在这里，我们想要打印不同的符文字符串及其对应位置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hěllo&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">s</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;position %d: %c\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span>])
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;len=%d\n&#34;</span>, len(<span style="color:#a6e22e">s</span>))
+</span></span></code></pre></div><p>​	我们使用range遍历s，然后我们要打印每个rune的索引，在字符串中使用这个索引</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>position 0: h
+</span></span><span style="display:flex;"><span>position 1: Ä
+</span></span><span style="display:flex;"><span>position 3: l
+</span></span><span style="display:flex;"><span>position 4: l
+</span></span><span style="display:flex;"><span>position 5: o
+</span></span><span style="display:flex;"><span>len<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><p>​	这段代码并没有和我们预料的一样：</p>
+<ul>
+<li>第二个rune输出的是Ä而不是ě</li>
+<li>索引从1跳到3，索引2是什么？</li>
+<li>len返回计数6，而s只包含5个符文</li>
+</ul>
+<p>​	首先，我们知道len返回的是字符串中字节数，而不是rune数。因为我们为s分配了一个字符串，所以s是一个UTF-8字符串。同时，特殊字符<code>ě</code>没有编码成一个字节；它需要2个字节。因此，调用<code>len(s)</code>返回6。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>** 计算字符串中的rune数量
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>如果我们想获取字符串中rune的数量，而不是字节数怎么办？ 我们如何做到这一点取决于编码。
+</span></span><span style="display:flex;"><span>在前面的示例中，因为我们为 s 分配了一个字符串文字，所以我们可以使用 unicode/utf8 包：
+</span></span><span style="display:flex;"><span>fmt.Println(utf8.RuneCountInString(s)) // 5
+</span></span></code></pre></div><p>​	让我们回到迭代来了解剩下的惊喜：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span><span style="color:#66d9ef">range</span> <span style="color:#a6e22e">s</span> {
+</span></span><span style="display:flex;"><span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;position %d: %c\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span>])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>​	我们必须了解到，我们没有遍历每个rune，而是迭代每个rune的起始索引。</p>
+<p>​	打印s[i]不会打印第i个rune；它打印索引i处字节的UTF-8表示心形式。因此，我们打印了 hÄllo 而不是 hěllo。那么，如果我们想打印所有的rune，我们该如何修改代码呢？有两个主要的选择</p>
+<p>​	我们必须使用range运算符的值元素</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hêllo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">s</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;position %d: %c\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>​	我们不使用s[i]打印rune，而是使用r变量。在字符串上使用range循环返回两个变量，rune的索引和rune本身</p>
+<pre tabindex="0"><code>position 0: h
+position 1: ê
+position 3: l
+position 4: l
+position 5: o
+</code></pre><p>​	另一个方法是将字符串转换为一段rune并对其进行迭代</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hêllo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">runes</span> <span style="color:#f92672">:=</span> []rune(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">runes</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;position %d: %c\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">position</span> <span style="color:#ae81ff">0</span>: <span style="color:#a6e22e">h</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">position</span> <span style="color:#ae81ff">1</span>: <span style="color:#a6e22e">ê</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">position</span> <span style="color:#ae81ff">2</span>: <span style="color:#a6e22e">l</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">position</span> <span style="color:#ae81ff">3</span>: <span style="color:#a6e22e">l</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">position</span> <span style="color:#ae81ff">4</span>: <span style="color:#a6e22e">o</span>
+</span></span></code></pre></div><p>​	在这里，我们使用 []rune(s) 将 s 转换为一段符文。 然后我们迭代这个切片并使用范围运算符的值元素来打印所有符文。 唯一的区别与位置有关：代码不打印符文字节序列的起始索引，而是直接打印符文的索引。</p>
+<p>​	请注意，与前一个解决方案相比，此解决方案引入了运行时开销。 事实上，将一个字符串转换成一个rune片段需要分配一个额外的片段并将字节转换成rune：时间复杂度为 O(n)，其中 n 是字符串中的字节数。 因此，如果我们要遍历所有rune，我们应该使用第一种方案。</p>
+<p>​	但是，如果我们想使用第一个选项访问字符串的第 i 个rune，我们将无法访问rune索引； 相反，我们知道rune在字节序列中的起始索引。 因此，在大多数情况下，我们应该倾向于第二种选择：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hêllo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span>[]rune(<span style="color:#a6e22e">s</span>)[<span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%c\n&#34;</span>, <span style="color:#a6e22e">r</span>) <span style="color:#75715e">// o
+</span></span></span></code></pre></div><p>​	此代码通过首先将字符串转换为符文切片来打印第四个rune.</p>
+<p>​	总之，如果我们想遍历字符串的rune，我们可以直接在字符串上使用range循环。 但我们必须记住，索引对应的不是rune索引，而是符文字节序列的起始索引。 因为一个rune可以由多个字节组成，如果我们要访问rune本身，我们应该使用范围的值变量，而不是字符串中的索引。 同时，如果我们有兴趣获得字符串的第 i 个rune，在大多数情况下我们应该将该字符串转换为一段rune。
+在下一节中，我们将研究在 strings 包中使用 trim 函数时常见的混淆源。</p>
+<h2 id="滥用trim方法">滥用trim方法<a hidden class="anchor" aria-hidden="true" href="#滥用trim方法">#</a></h2>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

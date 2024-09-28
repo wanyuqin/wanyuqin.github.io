@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>设计模式之抽象工厂模式 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="设计模式之抽象工厂模式
+工厂方法模式通过引入工厂等级结构，解决了简单工厂模式中工厂类职责太重的问题，但是由于工厂方法模式中每个工厂只会生产一类产品，可能会导致存在大量的工厂。增加系统开销。可以考虑将一些相关的产品组成一个&rsquo;产品族&rsquo;,由同一个工厂来统一生产，这就是抽象工厂模式的思想
+
+产品等级结构和产品族
+为了能更好的理解抽象工厂模式，这里解释两个概念
+
+产品等级结构: 产品等级结构就是产品继承结构，假如有一个抽象类是方便面，其子类有统一方便面，康师傅方便面，白象方便面，那么抽象方便面和具体的品牌方便面之间就构成了一个产品等级结构。抽象方便面是父类，而具体的品牌是子类。
+**产品族:**在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品。例如康师傅工厂的康师傅方便面、康师傅冰红茶、康师傅矿泉水。康师傅方便面位于方便面的产品等级中，康师傅冰红茶位于冰红茶产品等级中，康师傅方便面、康师傅冰红茶构成了一个产品族
+
+
+当系统所提供的工厂生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构、属于不同类型的具体产品时，就可以使用抽象工厂模式，抽象工厂模式和工厂方法模式最大的区别在于，工厂方法针对的是一个产品等级结构，而抽象工厂模式需要面对多个产品等级结构
+
+每个具体工厂可以生产属于一个产品族的所有产品，如果使用工厂方法模式，上图的产品需要15个工厂，而抽象工厂模式只需要5个工厂
+概述
+抽象工厂模式与工厂方法相比，具体的工厂不只创建一种产品，它负责创建一族产品
+定义
+抽象工厂模式:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为Kit模式，是一种对象创建型模式。
+在抽象工厂模式中有四个角色
+
+Abstract Factory(抽象工厂):它声明了一组用于创建一族产品的方法，每个方法对应一种产品
+ConcreteFactory（具体工厂) :它实现了在抽象工厂中声明的创建产品的方法，生成了一组具体产品，这些产品构成了一个产品族，每个产品都位于某个产品等级结构中
+AbstractProduct(抽象产品): 它为每种产品声明接口，在抽象产品中声明了产品的所有业务方法
+Concrete Product(具体产品): 它定义具体工厂生产的具体产品对象，实现在抽象产品接口中声明的业务方法
+
+改造
+package abstract_factory
+
+import &#34;fmt&#34;
+
+// AbstractFactory 抽象工厂
+type AbstractFactory interface {
+   CreateNoddles()Noddles
+   CreateDrink()Drink
+}
+
+// TongYiFactory 具体工厂
+type TongYiFactory struct{
+
+}
+
+func (t *TongYiFactory)CreateNoddles()Noddles{
+   return &amp;TongYiNoddles{}
+}
+
+func (t *TongYiFactory)CreateDrink()Drink{
+   return &amp;TongYiDrink{}
+}
+
+
+// KMasterFactory 具体工厂
+type KMasterFactory struct {
+
+}
+
+func (k *KMasterFactory)CreateNoddles()Noddles{
+   return &amp;KMasterNoodles{}
+}
+
+func (k *KMasterFactory)CreateDrink()Drink{
+   return &amp;KMasterDrink{}
+}
+
+
+
+
+// Noddles 抽象产品 方便面
+type Noddles interface {
+   Produce() // 生产面条
+}
+
+type TongYiNoddles struct {
+}
+
+func (t *TongYiNoddles) Produce() {
+   fmt.Println(&#34;生产统一方便面&#34;)
+}
+
+// KMasterNoodles 具体产品
+type KMasterNoodles struct {
+}
+
+func (k *KMasterNoodles) Produce() {
+   fmt.Println(&#34;生产康师傅方便面&#34;)
+
+}
+
+// Drink 抽象产品 饮料
+type Drink interface {
+   Decking() // 装罐
+}
+
+// TongYiDrink 具体产品
+type TongYiDrink struct {
+}
+
+func (t *TongYiDrink) Decking() {
+   fmt.Println(&#34;统一饮料装罐&#34;)
+}
+
+type KMasterDrink struct {
+}
+
+func (k *KMasterDrink) Decking() {
+   fmt.Println(&#34;康师傅饮料装罐&#34;)
+}
+抽象工厂
+// AbstractFactory 抽象工厂
+type AbstractFactory interface {
+   CreateNoddles()Noddles
+   CreateDrink()Drink
+}
+具体工厂
+// TongYiFactory 具体工厂
+type TongYiFactory struct{
+
+}
+
+func (t *TongYiFactory)CreateNoddles()Noddles{
+   return &amp;TongYiNoddles{}
+}
+
+func (t *TongYiFactory)CreateDrink()Drink{
+   return &amp;TongYiDrink{}
+}
+
+
+// KMasterFactory 具体工厂
+type KMasterFactory struct {
+
+}
+
+func (k *KMasterFactory)CreateNoddles()Noddles{
+   return &amp;KMasterNoodles{}
+}
+
+func (k *KMasterFactory)CreateDrink()Drink{
+   return &amp;KMasterDrink{}
+}
+抽象产品
+
+// Noddles 抽象产品 方便面
+type Noddles interface {
+   Produce() // 生产面条
+}
+
+// Drink 抽象产品 饮料
+type Drink interface {
+   Decking() // 装罐
+}
+具体产品
+
+type KMasterDrink struct {
+}
+
+func (k *KMasterDrink) Decking() {
+   fmt.Println(&#34;康师傅饮料装罐&#34;)
+}
+
+// KMasterNoodles 具体产品
+type KMasterNoodles struct {
+}
+
+func (k *KMasterNoodles) Produce() {
+   fmt.Println(&#34;生产康师傅方便面&#34;)
+
+}
+
+
+type TongYiNoddles struct {
+}
+
+func (t *TongYiNoddles) Produce() {
+   fmt.Println(&#34;生产统一方便面&#34;)
+}
+
+// TongYiDrink 具体产品
+type TongYiDrink struct {
+}
+
+func (t *TongYiDrink) Decking() {
+   fmt.Println(&#34;统一饮料装罐&#34;)
+}
+测试
+func TestAbstractFactory(t *testing.T) {
+	var factory AbstractFactory
+	factory = &amp;TongYiFactory{}
+	factory.CreateDrink().Decking()
+	factory.CreateNoddles().Produce()
+
+}
+
+
+
+// === RUN   TestAbstractFactory
+// 统一饮料装罐
+// 生产统一方便面
+// --- PASS: TestAbstractFactory (0.00s)
+// PASS
+总结
+优点
+
+增加一个新的产品族很方便，无须修改已有系统，符合开闭原则
+当一个产品族的多个对象被设计在一起工作时，能保证客户端始终只使用同一个产品族中的对象
+
+缺点
+增加新的产品等级结构麻烦，需要对原有的系统进行较大的修改，甚至需要修改抽象层的代码，会带来比较大的不方便，违背了开闭原则">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      设计模式之抽象工厂模式
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="设计模式之抽象工厂模式">设计模式之抽象工厂模式<a hidden class="anchor" aria-hidden="true" href="#设计模式之抽象工厂模式">#</a></h1>
+<p>工厂方法模式通过引入工厂等级结构，解决了简单工厂模式中工厂类职责太重的问题，但是由于工厂方法模式中每个工厂只会生产一类产品，可能会导致存在大量的工厂。增加系统开销。可以考虑将一些相关的产品组成一个&rsquo;产品族&rsquo;,由同一个工厂来统一生产，这就是抽象工厂模式的思想</p>
+<!-- raw HTML omitted -->
+<h3 id="产品等级结构和产品族">产品等级结构和产品族<a hidden class="anchor" aria-hidden="true" href="#产品等级结构和产品族">#</a></h3>
+<p>为了能更好的理解抽象工厂模式，这里解释两个概念</p>
+<ul>
+<li><strong>产品等级结构:</strong> 产品等级结构就是产品继承结构，假如有一个抽象类是方便面，其子类有统一方便面，康师傅方便面，白象方便面，那么抽象方便面和具体的品牌方便面之间就构成了一个产品等级结构。抽象方便面是父类，而具体的品牌是子类。</li>
+<li>**产品族:**在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品。例如康师傅工厂的康师傅方便面、康师傅冰红茶、康师傅矿泉水。康师傅方便面位于方便面的产品等级中，康师傅冰红茶位于冰红茶产品等级中，康师傅方便面、康师傅冰红茶构成了一个产品族</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>当系统所提供的工厂生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构、属于不同类型的具体产品时，就可以使用抽象工厂模式，抽象工厂模式和工厂方法模式最大的区别在于，<em>工厂方法针对的是一个产品等级结构，而抽象工厂模式需要面对多个产品等级结构</em></p>
+<!-- raw HTML omitted -->
+<p>每个具体工厂可以生产属于一个产品族的所有产品，如果使用工厂方法模式，上图的产品需要15个工厂，而抽象工厂模式只需要5个工厂</p>
+<h2 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h2>
+<p>抽象工厂模式与工厂方法相比，具体的工厂不只创建一种产品，它负责创建一族产品</p>
+<h3 id="定义">定义<a hidden class="anchor" aria-hidden="true" href="#定义">#</a></h3>
+<p>抽象工厂模式:提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类。抽象工厂模式又称为Kit模式，是一种对象创建型模式。</p>
+<p>在抽象工厂模式中有四个角色</p>
+<ol>
+<li>Abstract Factory(抽象工厂):它声明了一组用于创建一族产品的方法，每个方法对应一种产品</li>
+<li>ConcreteFactory（具体工厂) :它实现了在抽象工厂中声明的创建产品的方法，生成了一组具体产品，这些产品构成了一个产品族，每个产品都位于某个产品等级结构中</li>
+<li>AbstractProduct(抽象产品): 它为每种产品声明接口，在抽象产品中声明了产品的所有业务方法</li>
+<li>Concrete Product(具体产品): 它定义具体工厂生产的具体产品对象，实现在抽象产品接口中声明的业务方法</li>
+</ol>
+<h2 id="改造">改造<a hidden class="anchor" aria-hidden="true" href="#改造">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">abstract_factory</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// AbstractFactory 抽象工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AbstractFactory</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// TongYiFactory 具体工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiFactory</span> <span style="color:#66d9ef">struct</span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiFactory</span>)<span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TongYiNoddles</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiFactory</span>)<span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TongYiDrink</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// KMasterFactory 具体工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterFactory</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterFactory</span>)<span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">KMasterNoodles</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterFactory</span>)<span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">KMasterDrink</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Noddles 抽象产品 方便面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Noddles</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Produce</span>() <span style="color:#75715e">// 生产面条
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiNoddles</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiNoddles</span>) <span style="color:#a6e22e">Produce</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;生产统一方便面&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// KMasterNoodles 具体产品
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterNoodles</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterNoodles</span>) <span style="color:#a6e22e">Produce</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;生产康师傅方便面&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Drink 抽象产品 饮料
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Drink</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Decking</span>() <span style="color:#75715e">// 装罐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// TongYiDrink 具体产品
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiDrink</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiDrink</span>) <span style="color:#a6e22e">Decking</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;统一饮料装罐&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterDrink</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterDrink</span>) <span style="color:#a6e22e">Decking</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;康师傅饮料装罐&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="抽象工厂">抽象工厂<a hidden class="anchor" aria-hidden="true" href="#抽象工厂">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// AbstractFactory 抽象工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">AbstractFactory</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="具体工厂">具体工厂<a hidden class="anchor" aria-hidden="true" href="#具体工厂">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// TongYiFactory 具体工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiFactory</span> <span style="color:#66d9ef">struct</span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiFactory</span>)<span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TongYiNoddles</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiFactory</span>)<span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TongYiDrink</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// KMasterFactory 具体工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterFactory</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterFactory</span>)<span style="color:#a6e22e">CreateNoddles</span>()<span style="color:#a6e22e">Noddles</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">KMasterNoodles</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterFactory</span>)<span style="color:#a6e22e">CreateDrink</span>()<span style="color:#a6e22e">Drink</span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">KMasterDrink</span>{}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="抽象产品">抽象产品<a hidden class="anchor" aria-hidden="true" href="#抽象产品">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Noddles 抽象产品 方便面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Noddles</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Produce</span>() <span style="color:#75715e">// 生产面条
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Drink 抽象产品 饮料
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Drink</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Decking</span>() <span style="color:#75715e">// 装罐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h3 id="具体产品">具体产品<a hidden class="anchor" aria-hidden="true" href="#具体产品">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterDrink</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterDrink</span>) <span style="color:#a6e22e">Decking</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;康师傅饮料装罐&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// KMasterNoodles 具体产品
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">KMasterNoodles</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">KMasterNoodles</span>) <span style="color:#a6e22e">Produce</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;生产康师傅方便面&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiNoddles</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiNoddles</span>) <span style="color:#a6e22e">Produce</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;生产统一方便面&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// TongYiDrink 具体产品
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">TongYiDrink</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">TongYiDrink</span>) <span style="color:#a6e22e">Decking</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;统一饮料装罐&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestAbstractFactory</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">factory</span> <span style="color:#a6e22e">AbstractFactory</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">factory</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">TongYiFactory</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">factory</span>.<span style="color:#a6e22e">CreateDrink</span>().<span style="color:#a6e22e">Decking</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">factory</span>.<span style="color:#a6e22e">CreateNoddles</span>().<span style="color:#a6e22e">Produce</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// === RUN   TestAbstractFactory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 统一饮料装罐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 生产统一方便面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// --- PASS: TestAbstractFactory (0.00s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// PASS
+</span></span></span></code></pre></div><h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<h3 id="优点">优点<a hidden class="anchor" aria-hidden="true" href="#优点">#</a></h3>
+<ol>
+<li>增加一个新的产品族很方便，无须修改已有系统，符合开闭原则</li>
+<li>当一个产品族的多个对象被设计在一起工作时，能保证客户端始终只使用同一个产品族中的对象</li>
+</ol>
+<h3 id="缺点">缺点<a hidden class="anchor" aria-hidden="true" href="#缺点">#</a></h3>
+<p>增加新的产品等级结构麻烦，需要对原有的系统进行较大的修改，甚至需要修改抽象层的代码，会带来比较大的不方便，违背了开闭原则</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

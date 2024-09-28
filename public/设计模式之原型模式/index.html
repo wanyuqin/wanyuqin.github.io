@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>设计模式之原型模式 | My New Hugo Site</title>
+<meta name="keywords" content="">
+<meta name="description" content="设计模式之原型模式
+可以通过一个原型对象克隆出多个一模一样的对象，该模式称之为原型模式
+
+概述
+**原型模式：**使用原型实例指定创建对象的种类，并且通过克隆这些原型创建新的对象，原型模式是一种对象的创建型模式
+原型模式的工作原理就是将一个原型对象传给那个要发动创建的对象，这个要发动创建的对象通过请求原型对象克隆自己来实现创建的过程，通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址；通常，对克隆产生的对象进行的修改不会对原型对象造成任何影响，每一个克隆的对象都是相互独立的
+定义
+原型模式包含了三个角色
+
+
+Prototype(抽象原型类):它是声明克隆方法的接口，是所有具体原型类的公共父类，可以是抽象类也可以是接口，甚至可以是具体的实现类
+
+
+ConcretePrototype(具体原型类)：它实现在抽象原型类中声明的克隆方法，在克隆方法中返回一个自己的克隆对象
+
+
+Client(客户类):让一个原型对象克隆自己从而创建一个新的对象，在客户类中只需要直接实例化或通过工厂方法等方式创建一个原型对象，再通过该对象的克隆方法即可获得多个相同的对象
+
+
+创建忍者分身
+package prototype_pattern
+
+// Prototype 抽象原型
+type Prototype interface {
+   CloneM() Prototype
+}
+
+// Naruto 具体原型类
+type Naruto struct {
+   Model string
+}
+
+func (n *Naruto) CloneM() Prototype {
+   return &amp;Naruto{
+      Model: n.Model,
+   }
+}
+
+// Sasuke 具体原型类
+type Sasuke struct {
+   Model string
+}
+
+func (s *Sasuke) CloneM() Prototype {
+   return &amp;Sasuke{
+      Model: s.Model,
+   }
+}
+
+// NinjaFactory 忍者工厂
+type NinjaFactory interface {
+   CreateNinja(string) Prototype
+}
+
+type NarutoFactory struct {
+}
+
+func (n *NarutoFactory) CreateNinja(model string) Prototype {
+   return &amp;Naruto{
+      Model: model,
+   }
+}
+这里我们使用忍者的来举例，因为忍者也是可以分身的，分身和本体是一样的，但是分身的消失并不会去影响本体">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="My New Hugo Site (Alt + H)">My New Hugo Site</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      设计模式之原型模式
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="设计模式之原型模式">设计模式之原型模式<a hidden class="anchor" aria-hidden="true" href="#设计模式之原型模式">#</a></h1>
+<p>可以通过一个原型对象克隆出多个一模一样的对象，该模式称之为原型模式</p>
+<!-- raw HTML omitted -->
+<h2 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h2>
+<p>**原型模式：**使用原型实例指定创建对象的种类，并且通过克隆这些原型创建新的对象，原型模式是一种对象的创建型模式</p>
+<p>原型模式的工作原理就是将一个原型对象传给那个要发动创建的对象，这个要发动创建的对象通过请求原型对象克隆自己来实现创建的过程，通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址；通常，对克隆产生的对象进行的修改不会对原型对象造成任何影响，每一个克隆的对象都是相互独立的</p>
+<h2 id="定义">定义<a hidden class="anchor" aria-hidden="true" href="#定义">#</a></h2>
+<p>原型模式包含了三个角色</p>
+<ul>
+<li>
+<p>Prototype(抽象原型类):它是声明克隆方法的接口，是所有具体原型类的公共父类，可以是抽象类也可以是接口，甚至可以是具体的实现类</p>
+</li>
+<li>
+<p>ConcretePrototype(具体原型类)：它实现在抽象原型类中声明的克隆方法，在克隆方法中返回一个自己的克隆对象</p>
+</li>
+<li>
+<p>Client(客户类):让一个原型对象克隆自己从而创建一个新的对象，在客户类中只需要直接实例化或通过工厂方法等方式创建一个原型对象，再通过该对象的克隆方法即可获得多个相同的对象</p>
+</li>
+</ul>
+<h2 id="创建忍者分身">创建忍者分身<a hidden class="anchor" aria-hidden="true" href="#创建忍者分身">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">prototype_pattern</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Prototype 抽象原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Prototype</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Naruto 具体原型类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Naruto</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Model</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>) <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Naruto</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Sasuke 具体原型类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sasuke</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Model</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Sasuke</span>) <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Sasuke</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// NinjaFactory 忍者工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NinjaFactory</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateNinja</span>(<span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">Prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NarutoFactory</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NarutoFactory</span>) <span style="color:#a6e22e">CreateNinja</span>(<span style="color:#a6e22e">model</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Naruto</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里我们使用忍者的来举例，因为忍者也是可以分身的，分身和本体是一样的，但是分身的消失并不会去影响本体</p>
+<h3 id="prototype抽象原型类">Prototype(抽象原型类)<a hidden class="anchor" aria-hidden="true" href="#prototype抽象原型类">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Prototype 抽象原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Prototype</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里抽象原型类声明了一个CloneM()的克隆方法</p>
+<h3 id="concreteprototype具体原型类">ConcretePrototype(具体原型类)<a hidden class="anchor" aria-hidden="true" href="#concreteprototype具体原型类">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Naruto 具体原型类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Naruto</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Model</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>) <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Naruto</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Sasuke 具体原型类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sasuke</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">Model</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Sasuke</span>) <span style="color:#a6e22e">CloneM</span>() <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Sasuke</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后我们定义了两个具体的原型类，并且实现了抽象原型类里的抽象方法，鸣人和佐助</p>
+<h3 id="client客户类">Client(客户类)<a hidden class="anchor" aria-hidden="true" href="#client客户类">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#75715e">// NinjaFactory 忍者工厂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NinjaFactory</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">CreateNinja</span>(<span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">Prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NarutoFactory</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NarutoFactory</span>) <span style="color:#a6e22e">CreateNinja</span>(<span style="color:#a6e22e">model</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Naruto</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">Model</span>: <span style="color:#a6e22e">model</span>,
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>接着我们使用工厂方法模式，定义了一个忍者工厂，里面有一个创建忍者的方法，并且使用鸣人工厂去实现这个方法，创建出一个鸣人本体，接下来就可以使用鸣人的本体去克隆出分身</p>
+<h3 id="测试">测试<a hidden class="anchor" aria-hidden="true" href="#测试">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestNaruto_CloneM</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">narutoFactory</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NarutoFactory</span>{}
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">naruto</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">narutoFactory</span>.<span style="color:#a6e22e">CreateNinja</span>(<span style="color:#e6db74">&#34;九尾模式&#34;</span>)
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// 创建分身
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#a6e22e">c1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">naruto</span>.<span style="color:#a6e22e">CloneM</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">naruto</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">c1</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">naruto</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span><span style="color:#f92672">!=</span><span style="color:#a6e22e">c1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;clone failed&#34;</span>)
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">naruto</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">c1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// === RUN   TestNaruto_CloneM
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 九尾模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 九尾模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// --- PASS: TestNaruto_CloneM (0.00s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// PASS
+</span></span></span></code></pre></div><p>这里在创建完成并且克隆之后对比了两个实例的地址是否相同，如果相同那么就说明克隆失败，同时我们还比较了他们的模式是否相同，如果模式属性不同也是克隆失败的</p>
+<h2 id="原型管理器">原型管理器<a hidden class="anchor" aria-hidden="true" href="#原型管理器">#</a></h2>
+<p>原型管理器是将多个原型对象存储在一个集合里供客户端使用，它是一个专门负责克隆对象的工厂，其中定一个集合用来存储原型对象，如果需要某个原型对象的克隆，可以通过复制集合中对象的原型对象来获得。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">prototypeManager</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PrototypeManager</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">once</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Once</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">PrototypeManager</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">PrototypeTable</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">Prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PrototypeManager</span>)<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>,<span style="color:#a6e22e">prototype</span> <span style="color:#a6e22e">Prototype</span>)  {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">PrototypeTable</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">prototype</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PrototypeManager</span>)<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">key</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">Prototype</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">PrototypeTable</span>[<span style="color:#a6e22e">key</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewPrototypeManager</span>()<span style="color:#f92672">*</span><span style="color:#a6e22e">PrototypeManager</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">once</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">prototypeManager</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">PrototypeManager</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">PrototypeTable</span>: make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">Prototype</span>),
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>      })
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">prototypeManager</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="测试-1">测试<a hidden class="anchor" aria-hidden="true" href="#测试-1">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">manager</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PrototypeManager</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestPrototypeManager</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">n1</span><span style="color:#f92672">:=</span><span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;naruto&#34;</span>).<span style="color:#a6e22e">CloneM</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">n2</span><span style="color:#f92672">:=</span><span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;naruto&#34;</span>).<span style="color:#a6e22e">CloneM</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">n2</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">n1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">n2</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;clone failed&#34;</span>)
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">n1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">n2</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;sasuke&#34;</span>).<span style="color:#a6e22e">CloneM</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">s2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;sasuke&#34;</span>).<span style="color:#a6e22e">CloneM</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">s2</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">s1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">s2</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Naruto</span>).<span style="color:#a6e22e">Model</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;clone failed&#34;</span>)
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">s1</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Sasuke</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>   println(<span style="color:#a6e22e">s2</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">Sasuke</span>).<span style="color:#a6e22e">Model</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>(){
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">manager</span> = <span style="color:#a6e22e">NewPrototypeManager</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#e6db74">&#34;naruto&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Naruto</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;仙人模式&#34;</span>,
+</span></span><span style="display:flex;"><span>   })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">manager</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#e6db74">&#34;sasuke&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Sasuke</span>{
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;须佐能乎&#34;</span>,
+</span></span><span style="display:flex;"><span>   })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// === RUN   TestPrototypeManager
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 仙人模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 仙人模式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 须佐能乎
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 须佐能乎
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// --- PASS: TestPrototypeManager (0.00s)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// PASS
+</span></span></span></code></pre></div><p>这里创建了一个原型管理器，并且通过单例模式进行创建，在获取具体的对象的时候可以通过对象的类型来进行获取，并且进行克隆</p>
+<h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
+<h3 id="优点">优点<a hidden class="anchor" aria-hidden="true" href="#优点">#</a></h3>
+<ol>
+<li>当创建新的对象比较复杂的时候，可以通过克隆方法来提高创建对象的效率</li>
+</ol>
+<h3 id="缺点">缺点<a hidden class="anchor" aria-hidden="true" href="#缺点">#</a></h3>
+<ol>
+<li>需要为每一个类配备一个克隆方法，而且克隆方法在类的内部，对已有的类进行改造的时候，需要修改源码，违背了开闭原则</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">My New Hugo Site</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
